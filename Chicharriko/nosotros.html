@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chicharrikos - Quiénes Somos</title>
+    <!-- Enlace a Bootstrap 5 para estilos y funcionalidades responsivas -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 
@@ -25,11 +27,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <!----------------------------------------------------------->
 </head>
+
 <body>
 <header>
     <nav class="navbar navbar-expand-lg" style="background-color: #faaf2a">
         <div class="container-fluid">
-          <a class="navbar-brand d-flex align-items-center" href="#">
+          <a class="navbar-brand d-flex align-items-center" href="#" class="marca-texto">
             <img
               src="./img/chicharrikos.webp"
               alt="Logo"
@@ -53,17 +56,17 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0" style="padding-right: 5%">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="./index.html">Inicio</a>
+                <a class="nav-link" aria-current="page" href="./index.html" class="subtitulo">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./nosotros.html">Nosotros</a>
+                <a class="nav-link" href="./nosotros.html" class="subtitulo" >Nosotros</a>
               </li>
   
               <li class="nav-item">
-                <a class="nav-link" aria-disabled="true" href="./contacto.html">Contáctanos</a>
+                <a class="nav-link" aria-disabled="true" class="subtitulo" href="./contacto.html">Contáctanos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" aria-disabled="true" href="./catalogo.html">Catálogo</a>
+                <a class="nav-link" aria-disabled="true" class="subtitulo" href="./catalogo.html">Catálogo</a>
               </li>
             </ul>
             <ul class="navbar-nav" style="padding-right: 5%">
@@ -84,9 +87,180 @@
   
 
 </header> 
-<main>
-    <h3>Test jjjjjjjjjjnclkdhkchbchv
-    </h3>
+<main> <!--Inicia main-->
+
+  <div class="container mt-5">
+    <h1 class="container mb-4">¿Quiénes Somos?</h1>
+
+    <p class="text-justificado">
+        En Chicharrikos, nos especializamos en ofrecer una solución innovadora a un problema común dentro del mercado de botanas tradicionales: la dificultad para encontrar proveedores confiables que garanticen calidad constante, precios accesibles y un proceso de abastecimiento eficiente.
+    </p>
+    <p class="text-justificado">
+        Sabemos que muchos negocios enfrentan grandes desafíos al tratar con distribuidores convencionales, quienes imponen mínimos de compra elevados, tienen procesos de compra poco flexibles y limitan las opciones de adquisición en línea. Esto no solo dificulta la gestión del inventario, sino que también restringe la capacidad de los comerciantes para diversificar su oferta y responder con agilidad a la demanda del mercado.
+    </p>
+    <p class="text-justificado">
+        Además, la escasez de variedad en productos y la falta de presentaciones atractivas afectan la competitividad de los negocios, dificultando la diferenciación frente a la competencia. En Chicharrikos, entendemos estas necesidades y nos comprometemos a brindar una alternativa confiable, accesible y con opciones versátiles para que cada cliente pueda ofrecer productos de alta calidad, con una presentación que realmente atraiga a los consumidores.
+    </p>
+    <p class="text-justificado">
+        Nuestro objetivo es ser alidao estrategico ideal para aquellos que buscan abastecerse de botanas tradiconales sin complicaciones, asegurando siempre la mejor experiencia de compra y satisfacción con dada entrega.
+    </p>
+    
+    <div class="row text-center mt-4">
+        <div class="row text-center mt-4">
+            <!-- Misión -->
+            <div class="col-md-4" id="mision">
+                <div class="emoji-container">
+                    <p class="fs-1">🌟</p>
+                </div>
+                <h3>Misión</h3>
+                <p class="text-justificado">
+                    Conectar a negocios y comercios con botanas menos procesadas, más naturales y accesibles.
+                </p>
+            </div>
+            
+            <!-- Visión -->
+            <div class="col-md-4" id="vision">
+                <div class="emoji-container">
+                    <p class="fs-1">👁️</p>
+                </div>
+                <h3>Visión</h3>
+                <p class="text-justificado">
+                    Ser el principal proveedor de botanas menos procesadas para tiendas y supermercados en México.
+                </p>
+            </div>
+        
+            <!-- Valores -->
+            <div class="col-md-4" id="valores">
+                <div class="emoji-container">
+                    <p class="fs-1">🎉</p>
+                </div>
+                <h3>Valores</h3>
+                <ul class="list-unstyled">
+                    <li>✅ Compromiso</li>
+                    <li>✅ Calidad</li>
+                    <li>✅ Satisfacción del cliente</li>
+                    <li>✅ Responsabilidad</li>
+                    <li>✅ Innovación</li>
+                </ul>
+            </div>
+        </div>
+</div>
+
+<!-- Sección de equipo -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Nuestro Equipo</h2>
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card bg-light mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="foto" class="img-fluid rounded-start" alt="Cristian Jimenez">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Cinthya Ximena García Urzúa</h5>
+                            <p class="card-text">Desarroladora Java Full Stack</p>
+                            <ul class="list-unstyled">
+                                <li>Amante de los deportes</li>
+                                <li>Practico Basketball</li>
+                                <li>Amo la comida que tenga queso</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="profile2.jpg" class="img-fluid rounded-start" alt="Denisse Aylin">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Denisse Aylin Hernández Vásquez</h5>
+                            <p class="card-text">Desarroladora Java Full Stack</p>
+                            <ul class="list-unstyled">
+                                <li>Sobrevivo por pura amnsiedad</li>
+                                <li>Arriba los gatos llorones</li>
+                                <li>Amante del elote</li>
+                                <li>Puro Chai con Café</li>
+                                <li>LGBT+</li>
+                                <li>Presencia de alto impacto</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="profile3.jpg" class="img-fluid rounded-start" alt="Javier Mauricio">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Jennifer Montaño Reyes</h5>
+                            <p class="card-text">Desarroladora Java Full Stack</p>
+                            <ul class="list-unstyled">
+                                <li>Texto aquí</li>
+                                <li>Texto aquí</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="profile2.jpg" class="img-fluid rounded-start" alt="Denisse Aylin">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Mariana Osornio Zepeda</h5>
+                            <p class="card-text">Desarroladora Java Full Stack</p>
+                            <ul class="list-unstyled">
+                                <li>Amante viajera junto con mi pareja</li>
+                                <li>Amante del café</li>
+                                <li>Me gustan los takis morados</li>
+                                <li>Fan #1 de Bad Bunnys</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="profile2.jpg" class="img-fluid rounded-start" alt="Denisse Aylin">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Elba Itzel Padilla Cisneros</h5>
+                            <p class="card-text">Desarroladora Java Full Stack</p>
+                            <ul class="list-unstyled">
+                                <li>Boy Mom</li>
+                                <li>24yrs</li>
+                                <li>El café me da taquicardía</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="profile2.jpg" class="img-fluid rounded-start" alt="Denisse Aylin">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Daniela Rodriguez García</h5>
+                            <p class="card-text">Desarroladora Java Full Stack</p>
+                            <ul class="list-unstyled">
+                                <li>Amante de los elotes</li>
+                                <li>Terreneitor 3000</li>
+                                <li>Amante viajera</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </main> 
 
 <footer class="footer"><!--Inicia footer-->
@@ -155,7 +329,9 @@
 </footer>    
 
 
+    <!-- Enlace a tu archivo de JavaScript -->
     <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>    
+    <!-- Enlace a la librería de Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
