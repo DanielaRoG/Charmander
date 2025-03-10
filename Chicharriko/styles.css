@@ -1,60 +1,71 @@
-
-main{
-  background-color:#f7e7ce ;
+main {
+  background-color: #f7e7ce;
 }
 
-footer{
-    
-    left: 0;
-    bottom: 0;
-    right: 0;
-    padding: 20px;
-    background-color: #faaf2a;
-    display: grid;
-    place-content: center;
-    grid-template-areas: "logo socials" "links links";
-    grid-template-columns: repeat(2, lfr);
-    color: black;
+footer {
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+  background-color: #faaf2a;
+  display: grid;
+  place-content: center;
+  grid-template-areas: "logo socials" "links links";
+  grid-template-columns: repeat(2, lfr);
+  color: black;
 }
 
-    .marca-texto { /* Titulos */
-        font-family: "ABeeZee", sans-serif;
-        font-weight: 500;
-        font-style: normal;
-      }
-      
+.marca-texto {
+  /* Titulos */
+  font-family: "ABeeZee", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
 
-      
-    .subtitulo {
-        display:flex;
-        font-family: "Inter", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 300; 
-        font-style: normal;
-        text-align: center;
-        
-    }
+.subtitulo {
+  display: flex;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  text-align: center;
+}
 
-    .texto{
-    
-    font-family: "Roboto", sans-serif;
-    /*font-optical-sizing: auto;*/
-    font-weight: 200;
-    font-style: normal;
-    font-variation-settings:"width" 100;
-    }
+.texto {
+  font-family: "Roboto", sans-serif;
+  /*font-optical-sizing: auto;*/
+  font-weight: 200;
+  font-style: normal;
+  font-variation-settings: "width" 100;
+}
 
-    
-      
-    
-    a {
-      text-decoration: none; /* Quita el subrayado */
-      color: inherit; /* Usa el color del texto padre */
-      background: none; /* Elimina fondos predeterminados */
-      border: none; /* Quita bordes si los hubiera */
-    
-    }
+a {
+  text-decoration: none; /* Quita el subrayado */
+  color: inherit; /* Usa el color del texto padre */
+  background: none; /* Elimina fondos predeterminados */
+  border: none; /* Quita bordes si los hubiera */
+}
 
+a:visited,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
 
+.chicharriko {
+  background-color: #faaf2a;
+  border: 1px solid #faaf2a;
+  color: #000;
+}
 
-    a:visited, a:hover, a:focus, a:active { text-decoration: none; color: inherit; }
+.chicharriko i {
+  padding-right: 10px;
+}
+
+.chicharriko:hover {
+  background-color: #34623f;
+  border: 1px solid #34623f;
+  color: #f7e7ce;
+}
