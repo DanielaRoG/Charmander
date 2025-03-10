@@ -1,5 +1,10 @@
+
+main{
+  background-color:#f7e7ce ;
+}
+
 footer{
-    position: fixed;
+    
     left: 0;
     bottom: 0;
     right: 0;
@@ -21,20 +26,25 @@ footer{
 
       
     .subtitulo {
+        display:flex;
         font-family: "Inter", sans-serif;
         font-optical-sizing: auto;
         font-weight: 300; 
         font-style: normal;
+        text-align: center;
+        
     }
 
     .texto{
+    
     font-family: "Roboto", sans-serif;
-    font-optical-sizing: auto;
+    /*font-optical-sizing: auto;*/
     font-weight: 200;
     font-style: normal;
-    font-variation-settings:
-      "wdth" 100;
+    font-variation-settings:"width" 100;
     }
+
+    
       
     
     a {
@@ -44,5 +54,7 @@ footer{
       border: none; /* Quita bordes si los hubiera */
     
     }
+
+
 
     a:visited, a:hover, a:focus, a:active { text-decoration: none; color: inherit; }
