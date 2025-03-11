@@ -1,4 +1,4 @@
-main {
+body {
   background-color: #f7e7ce;
 }
 
@@ -60,12 +60,60 @@ a:active {
   color: #000;
 }
 
-.chicharriko i {
-  padding-right: 10px;
-}
-
 .chicharriko:hover {
   background-color: #34623f;
   border: 1px solid #34623f;
   color: #f7e7ce;
+}
+
+.card-custom {
+  max-width: 850px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: "Roboto", sans-serif;
+  color: #000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-custom:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card-custom:last-child {
+  margin-bottom: 30px;
+}
+
+.info-container {
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  text-align: justify;
+}
+
+.sub-card-t {
+  font-size: 18px;
+}
+
+.p-card-t {
+  color: #000;
+}
+
+.text-justify {
+  text-align: justify;
+  font-family: "Roboto", sans-serif;
+}
+
+.text-center {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+}
+
+.text-espacio {
+  margin-left: 50px;
 }
