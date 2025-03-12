@@ -117,3 +117,81 @@ a:active {
 .text-espacio {
   margin-left: 50px;
 }
+
+/*Estilo para el formulario de contacto*/
+.contact {
+  padding: 4%;
+  height: auto; /* Se ajustará al contenido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact .row {
+  width: 100%;
+  max-width: 900px; /* Limita el tamaño en pantallas grandes */
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.contact .col-md-3 {
+  background: #faaf2a;
+  padding: 4%;
+  border-radius: 0.5rem 0 0 0.5rem;
+  text-align: center;
+  color: #000;
+}
+
+.contact-info img {
+  margin-bottom: 15%;
+  max-width: 100px; /* Ajuste de tamaño */
+}
+
+.contact-info h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10%;
+}
+
+.contact .col-md-9 {
+  background: #fff;
+  padding: 3%;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.contact-form label {
+  font-weight: 600;
+}
+
+.contact-form button {
+  background: #34623f;
+  color: #fff;
+  font-weight: 600;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  
+}
+
+.contact-form button:hover {
+  background: #61210f;
+  color: #fff;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .contact .row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .col-md-3, .col-md-9 {
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+
+  .contact-form button {
+    width: 100%;
+  }
+}
