@@ -1,114 +1,77 @@
-// Esperar a que el DOM cargue completamente
 document.addEventListener("DOMContentLoaded", function () {
-    // Seleccionar el formulario
-    let formulario = document.querySelector(".contact-form");
+    emailjs.init("iIMwrff8d-6vXi-xH"); // Reemplaza con tu Public Key de EmailJS
 
-    if (!formulario) {
-        console.error(" No se encontró el formulario.");
-        return;
-    }
+    let formulario = document.querySelector(".contact-form");
+    if (!formulario) return console.error("No se encontró el formulario.");
 
     let botonEnviar = formulario.querySelector("button[type='submit']");
+    if (!botonEnviar) return console.error("No se encontró el botón de envío.");
 
-    if (!botonEnviar) {
-        console.error(" No se encontró el botón de envío.");
-        return;
-    }
-
-    // Escuchar el evento de envío del formulario
     botonEnviar.addEventListener("click", function (event) {
-        event.preventDefault(); // Evitar recarga antes de validar
+        event.preventDefault();
+        botonEnviar.disabled = true; // 🔹 Deshabilitamos el botón para evitar doble clic
 
         let nombre = document.getElementById("nombre")?.value.trim();
         let apellido = document.getElementById("apellido")?.value.trim();
         let correo = document.getElementById("email")?.value.trim();
         let mensaje = document.getElementById("mensaje")?.value.trim();
 
-        // Validaciones
-        if (!validarTexto(nombre)) {
-            alert("Nombre inválido. Solo se permiten letras y espacios.");
+        if (!validarTexto(nombre) || !validarTexto(apellido) || !validarCorreo(correo) || !validarMensaje(mensaje)) {
+            alert("Revisa los campos ingresados.");
+            botonEnviar.disabled = false; // 🔹 Habilitamos el botón si hay error
             return;
         }
 
-        if (!validarTexto(apellido)) {
-            alert(" Apellido inválido. Solo se permiten letras y espacios.");
-            return;
-        }
-
-        if (!validarCorreo(correo)) {
-            alert(" Correo electrónico inválido. Debe contener '@' y un dominio válido.");
-            return;
-        }
-
-        if (!validarMensaje(mensaje)) {
-            alert(" Mensaje inválido. No debe contener caracteres especiales como <, >, @, #, $.");
-            return;
-        }
-
-        // Si la validación pasa, se envía el correo
-        enviarCorreo(nombre, apellido, correo, mensaje);
+        enviarCorreo(nombre, apellido, correo, mensaje, function () {
+            botonEnviar.disabled = false; // 🔹 Reactivamos el botón después del envío
+        });
     });
 
-    // Función para validar nombres y apellidos (solo letras y espacios)
     function validarTexto(texto) {
-        let regex = /^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s]+$/;
-        return regex.test(texto);
+        return /^[a-zA-ZÁÉÍÓÚÑáéíóúñ\s]+$/.test(texto);
     }
 
-    // Función para validar correo electrónico
     function validarCorreo(correo) {
-        let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return regex.test(correo);
+        return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(correo);
     }
 
-    // Función para validar el mensaje (evita caracteres especiales)
     function validarMensaje(texto) {
-        let regex = /^[a-zA-Z0-9ÁÉÍÓÚÑáéíóúñ\s.,!?]+$/;
-        return regex.test(texto);
+        return /^[a-zA-Z0-9ÁÉÍÓÚÑáéíóúñ\s.,!?]+$/.test(texto);
     }
 });
 
-// Inicializar EmailJS con la clave pública
-(function () {
-    emailjs.init("iIMwrff8d-6vXi-xH"); // Reemplaza con tu Public Key de EmailJS CHICHARRIKOS
-})();
-
-// Función para enviar el correo
-function enviarCorreo(nombre, apellido, correo, mensaje) {
+function enviarCorreo(nombre, apellido, correo, mensaje, callback) {
     let paramsUsuario = {
+        email: correo,
         nombre: nombre,
         apellido: apellido,
-        correo: correo,
         mensaje: mensaje
     };
 
     let paramsAdmin = {
         nombre: nombre,
         apellido: apellido,
-        correo: correo,
-        mensaje: mensaje
+        mensaje: mensaje,// 🔹 No agregamos "email" si ya está en el template
     };
-    //Funcion para enviar correo al usuario
-    console.log(" Enviado al usuario:");
-    emailjs.send("service_bc0wkbb", "template_usuario", paramsUsuario)// ID del servicio y ID del template
+
+    emailjs.send("service_61ns5ta", "template_eonfg6q", paramsUsuario)
         .then(function (response) {
+            console.log("Correo enviado al usuario:", response);
             alert("Hemos recibido tu correo con éxito!");
-            console.log(" Énviado el correo al usuario:", response);
         })
         .catch(function (error) {
-            console.error(" Error al enviar correo al usuario", error);
+            console.error("Error al enviar correo al usuario", error);
         });
-    
-        //Funcion para enviar correo al admin
-    console.log("Enviado al administrador");
-    emailjs.send("service_bc0wkbb", "template_admin", paramsAdmin) // Cambiar "template_admin"
+
+    emailjs.send("service_61ns5ta", "template_00pcup8", paramsAdmin)
         .then(function (response) {
-            console.log(" Correo enviado al administrador:", response);
-            document.querySelector(".contact-form").reset(); // Para limpiar formulario
-        })    
-
+            console.log("Correo enviado al administrador:", response);
+            document.querySelector(".contact-form").reset();
+        })
         .catch(function (error) {
-            console.error(" Error al enviar correo al admin:", error);
+            console.error("Error al enviar correo al admin:", error);
+        })
+        .finally(function () {
+            if (callback) callback(); // 🔹 Reactivar botón después del envío
         });
-    }
-
+}
