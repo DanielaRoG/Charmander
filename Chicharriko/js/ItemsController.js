@@ -56,11 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Validate image URL (basic URL validation)
-    const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,6})(\/[\w\-.]*)*(\?.*)?(#.*)?$/i;
     if (!urlPattern.test(imageUrl)) {
       showAlert('Por favor, ingrese una URL de imagen válida.');
       return;
     }
+
 
     // If all validations pass, proceed with adding the item
     if (name && description && imageUrl) {
