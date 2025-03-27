@@ -1,59 +1,6 @@
 // Inicializa ItemsController
 const itemsController = new ItemsController(0);
 
-// Lista de 10 objetos de muestra
-const sampleItems = [
-  {
-    name: "Chips",
-    img: "https://images.pexels.com/photos/568805/pexels-photo-568805.jpeg",
-    description: "Cheese & Onion Chips",
-  },
-  {
-    name: "Juice",
-    img: "https://images.pexels.com/photos/158053/fresh-orange-juice-squeezed-refreshing-citrus-158053.jpeg",
-    description: "Orange and Apple juice fresh and delicious",
-  },
-  {
-    name: "Chocolate",
-    img: "https://images.pexels.com/photos/65882/chocolate-dark-coffee-confiserie-65882.jpeg",
-    description: "Delicious dark chocolate",
-  },
-  {
-    name: "Soda",
-    img: "https://images.pexels.com/photos/50593/coca-cola-cold-drink-soft-drink-coke-50593.jpeg",
-    description: "Refreshing soda drink",
-  },
-  {
-    name: "Cookies",
-    img: "https://images.pexels.com/photos/1740891/pexels-photo-1740891.jpeg",
-    description: "Crispy chocolate chip cookies",
-  },
-  {
-    name: "Coffee",
-    img: "https://images.pexels.com/photos/851555/pexels-photo-851555.jpeg",
-    description: "Hot and fresh coffee",
-  },
-  {
-    name: "Ice Cream",
-    img: "https://images.pexels.com/photos/1362534/pexels-photo-1362534.jpeg",
-    description: "Vanilla ice cream in a cone",
-  },
-  {
-    name: "Bread",
-    img: "https://images.pexels.com/photos/209206/pexels-photo-209206.jpeg",
-    description: "Freshly baked bread",
-  },
-  {
-    name: "Cheese",
-    img: "https://images.pexels.com/photos/821365/pexels-photo-821365.jpeg",
-    description: "Swiss cheese slices",
-  },
-  {
-    name: "Strawberries",
-    img: "https://images.pexels.com/photos/583840/pexels-photo-583840.jpeg",
-    description: "Fresh and juicy strawberries",
-  },
-];
 
 // Función para agregar un item al HTML
 function addItemToList(item) {
