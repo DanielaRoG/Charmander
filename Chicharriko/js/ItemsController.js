@@ -104,10 +104,11 @@ document.addEventListener("DOMContentLoaded", () => {
   
       // Obtener el siguiente ID (empezando desde 0 si no hay productos)
       const nextId = items.length > 0
-        ? Math.max(...items.map(item => Number(item.id))) + 1
-        : 0;
-  
+      ? String(Math.max(...items.map(item => Number(item.id))) + 1)
+      : "1";  // Si no hay productos, empieza desde "1"
+
       const newItem = { id: nextId, name, description, imageUrl };
+
   
       await fetch(API_URL, {
         method: "POST",
@@ -127,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ELIMINAR PRODUCTO
   async function deleteItem(id) {
     try {
-      await fetch(`${API_URL}/${Number(id)}`, {
+      await fetch(`${API_URL}/${(id)}`, {
         method: "DELETE",
       });
       loadItems();
