@@ -1,5 +1,11 @@
 {
   "devDependencies": {
-    "json-server": "^1.0.0-beta.3"
+    "json-server": "^1.0.0-beta.3",
+    "concurrently": "^8.0.1"
+  },
+  "scripts": {
+    "start:items": "json-server --watch db/items.json --port 3001",
+    "start:users": "json-server --watch db/users.json --port 3002",
+    "start:all": "concurrently \"npm run start:items\" \"npm run start:users\""
   }
 }
