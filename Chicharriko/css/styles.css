@@ -104,7 +104,170 @@ footer .subtitulo img {
   }
 }
 
+a {
+  text-decoration: none; /* Quita el subrayado */
+  color: inherit; /* Usa el color del texto padre */
+  background: none; /* Elimina fondos predeterminados */
+  border: none; /* Quita bordes si los hubiera */
+}
+
+a:visited,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* ... (resto de tus estilos existentes para footer, .marca-texto, .subtitulo, .texto, a, .chicharriko, etc.) ... */
+.marca-texto {
+  /* Titulos */
+  font-family: "ABeeZee", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.subtitulo {
+  display: flex;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  text-align: center;
+}
+
+.texto {
+  font-family: "Roboto", sans-serif;
+  /*font-optical-sizing: auto;*/
+  font-weight: 200;
+  font-style: normal;
+  font-variation-settings: "width" 100;
+}
+
+.chicharriko {
+  background-color: #faaf2a;
+  border: 1px solid #faaf2a;
+  color: #000;
+}
+
+.chicharriko:hover {
+  background-color: #34623f;
+  border: 1px solid #34623f;
+  color: #f7e7ce;
+}
+
+.card-custom {
+  max-width: 850px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: "Roboto", sans-serif;
+  color: #000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-custom:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card-custom:last-child {
+  margin-bottom: 30px;
+}
+
+.info-container {
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  text-align: justify;
+}
+
+.sub-card-t {
+  font-size: 18px;
+}
+
+.p-card-t {
+  color: #000;
+}
+
+.text-justify {
+  text-align: justify;
+  font-family: "Roboto", sans-serif;
+}
+
+.text-center {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+}
+
+.text-espacio {
+  margin-left: 50px;
+}
+
+/*Estilo para el formulario de contacto*/
+.contact {
+  padding: 4%;
+  height: auto; /* Se ajustará al contenido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact .row {
+  width: 100%;
+  max-width: 900px; /* Limita el tamaño en pantallas grandes */
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.contact .col-md-3 {
+  background: #faaf2a;
+  padding: 4%;
+  border-radius: 0.5rem 0 0 0.5rem;
+  text-align: center;
+  color: #000;
+}
+
+.contact-info img {
+  margin-bottom: 15%;
+  max-width: 100px; /* Ajuste de tamaño */
+}
+
+.contact-info h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10%;
+}
+
+.contact .col-md-9 {
+  background: #fff;
+  padding: 3%;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.contact-form label {
+  font-weight: 600;
+}
+
+.contact-form button {
+  background: #34623f;
+  color: #fff;
+  font-weight: 600;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  
+}
+
+.contact-form button:hover {
+  background: #61210f;
+  color: #fff;
+}
 
 
 /* Estilos del formulario de login */
@@ -150,6 +313,23 @@ footer .subtitulo img {
 @media (min-width: 992px) {
   .gradient-form {
     min-height: calc(100vh - 150px); /* Ajusta según el tamaño del header/footer */
+  }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .contact .row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .col-md-3, .col-md-9 {
+    width: 100%;
+    border-radius: 0.5rem;
+  }
+
+  .contact-form button {
+    width: 100%;
   }
 }
 
