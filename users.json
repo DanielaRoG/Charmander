@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "nombre": "Denisse Hernández",
+      "telefono": "3318483237",
+      "direccion": "5 de febrero 227",
+      "email": "denissehernandez2002@gmail.com",
+      "password": "1234567"
+    },
+    {
+      "id": "2",
+      "nombre": "Aylen Vázquez",
+      "telefono": "3318483237",
+      "direccion": "5 de febrero 227",
+      "email": "denissehernandez2002@gmail.com",
+      "password": "lkmmlmlkmlkml"
+    },
+    {
+      "id": "3",
+      "nombre": "Aylen Vázquez",
+      "telefono": "3318483237",
+      "direccion": "5 de febrero 227",
+      "email": "denissehernandez2002@gmail.com",
+      "password": "sjnsdkjsdshkhsjkd"
+    }
+  ],
+  "userId": 1
+}
