@@ -178,12 +178,17 @@
                         <input type="email" id="emailUsuario" class="form-control" placeholder="Ingresa tu email" />
                       </div>
                     
-                      <div data-mdb-input-init class="form-outline mb-4">
+                    <div data-mdb-input-init class="form-outline mb-4">
                         <label class="form-label" for="passwordUsuario">Contraseña</label>
                         <input type="password" id="passwordUsuario" class="form-control" placeholder="Ingresa tu contraseña" />
-                      </div>
-                    
-                      <div class="text-center pt-1 mb-5 pb-1">
+                        <button type="button" id="togglePassword" class="btn btn-outline-secondary">👀</button>
+                    </div>
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <label class="form-label" for="passwordUsuarioVal"> Validar Contraseña</label>
+                        <input type="password" id="passwordUsuarioValidar" class="form-control" placeholder="Ingresa tu contraseña nuevamente" />
+                        <button type="button" id="togglePasswordValidar" class="btn btn-outline-secondary">👀</button>
+                    </div>
+                    <div class="text-center pt-1 mb-5 pb-1">
                         <button
                           data-mdb-button-init
                           data-mdb-ripple-init
@@ -202,9 +207,7 @@
                     </form>
                   </div>
                 </div>
-                <div
-                  class="col-lg-6 d-flex align-items-center gradient-custom-2"
-                >
+                <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
                   <div class="text-black px-3 py-4 p-md-5 mx-md-4">
                     <h4 class="mb-4">¡Somos más que botanas!</h4>
                     <p class="small mb-0">
