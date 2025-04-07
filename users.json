@@ -23,6 +23,15 @@
       "direccion": "5 de febrero 227",
       "email": "denissehernandez2002@gmail.com",
       "password": "sjnsdkjsdshkhsjkd"
+    },
+    {
+      "id": "4",
+      "nombre": "daniela",
+      "telefono": "5562555137",
+      "direccion": "Topiltzin #4490,Col.El Zapote",
+      "email": "dany.rodgarcia@gmail.com",
+      "password": "999999",
+      "passwordUsuarioValidar": "999999"
     }
   ],
   "userId": 1
