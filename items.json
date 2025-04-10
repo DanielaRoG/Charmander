@@ -2,62 +2,82 @@
   "items": [
     {
       "id": "1",
-      "name": "Manguito Enchilado",
-      "description": "deshidratado con chile",
+      "nombre": "Manguito Enchilado",
+      "precio": 55,
+      "existencia": 10,
+      "categoria": 10,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/products/manguito-con-chile-433216.png?v=1735790565&width=1080"
     },
     {
       "id": "2",
-      "name": "Churritos",
-      "description": "sal y limon",
+      "nombre": "Churritos",
+      "precio": 35,
+      "existencia": 20,
+      "categoria": 30,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/products/churritos-amaranto-sal-y-limon-118951.png?v=1735790683&width=1080"
     },
     {
       "id": "3",
-      "name": "Guayaba Enchilada",
-      "description": "textura de goma",
+      "nombre": "Guayaba Enchilada",
+      "precio": 69,
+      "existencia": 13,
+      "categoria": 10,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/products/guayaba-enchilada-959944.png?v=1735790502&width=1080"
     },
     {
       "id": "4",
-      "name": "Chips de Platano sin Azucar",
-      "description": "Platano macho y aceite vegetal",
+      "nombre": "Chips de Plátano sin Azúcar",
+      "precio": 40,
+      "existencia": 17,
+      "categoria": 30,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/products/chips-de-platano-sin-azucar-852883.png"
     },
     {
       "id": "5",
-      "name": "Pretzel Cubierto con Chocolate",
-      "description": "Chocolate con leche",
+      "nombre": "Pretzel Cubierto con Chocolate",
+      "precio": 65,
+      "existencia": 11,
+      "categoria": 20,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/files/pretzel-cubierto-con-chocolate-620320.png"
     },
     {
       "id": "6",
-      "name": "Pasa con chocolate sin azucar",
-      "description": "Uva pasa y chocolate",
+      "nombre": "Pasa con chocolate sin azúcar",
+      "precio": 70,
+      "existencia": 18,
+      "categoria": 20,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/files/pasa-con-chocolate-sin-azucar-963800.png"
     },
     {
       "id": "7",
-      "name": "Mix de Verduras Enchiladas",
-      "description": "Camote, malanga, zanahoria, betabel, yuca y mezcla de chiles en polvo.",
+      "nombre": "Mix de Verduras Enchiladas",
+      "precio": 50,
+      "existencia": 10,
+      "categoria": 10,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/products/mix-de-verduras-enchiladas-estado-natural-804334.png"
     },
     {
       "id": "8",
-      "name": "Durazno Enchilado",
-      "description": "Durazno deshidratado y mezcla de chiles en polvo",
+      "nombre": "Durazno Enchilado",
+      "precio": 65,
+      "existencia": 15,
+      "categoria": 10,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/products/durazno-enchilado-238515.png"
     },
     {
       "id": "9",
-      "name": "Pina Deshidratada",
-      "description": "Pina fresca deshidratada",
+      "nombre": "Piña Deshidratada",
+      "precio": 35,
+      "existencia": 10,
+      "categoria": 20,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/products/pina-deshidratada-551945.png"
     },
     {
       "id": "10",
-      "name": "Chips Chilacayote Fuego",
-      "description": "Aceite vegetal",
+      "nombre": "Chips Chilacayote Fuego",
+      "precio": 45.8,
+      "existencia": 10,
+      "categoria": 10,
       "imageUrl": "https://estadonatural.com.mx/cdn/shop/files/chips-chilacayote-fuego-estado-natural-957173.png"
     }
   ]
