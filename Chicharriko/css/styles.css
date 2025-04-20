@@ -349,3 +349,12 @@ a:active {
   background: linear-gradient(to right, #607744, #34623f);
 }
 
+button {
+  background-color: #34623f;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
