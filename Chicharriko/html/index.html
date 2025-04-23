@@ -136,45 +136,75 @@
     </header>
     <main>
       <!------------------------------- carrusel de inicio------------------------------------->
-      <div id="carouselExample" class="carousel slide" style="width: 600px;  float: right; margin-left: 100px;">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-      <img src="/img/chicharriko_pet_round.png" class="d-block w-100" alt="...">
+      <main class="container py-4">
+        <div class="row align-items-center">
+          <!-- Texto y botón -->
+          <div class="col-12 col-md-6 text-center text-md-start mb-4 mb-md-0">
+            <h1>¿Quieres mejorar tu negocio y eventos, pero no sabes cómo?</h1>
+            <h2>¡No te preocupes nosotras te ayudamos!</h2>
+            <h2>No solo tenemos botanas naturales, navega por nuestro catálogo y date un gusto.</h2>
+            <button>
+              <a href="../html/catalogo.html" style="color: white; text-decoration: none;">Catálogo</a>
+            </button>        
+          </div>
+      
+          <!-- Carrusel -->
+          <div class="col-12 col-md-6">
+            <div id="carouselExample" class="carousel slide">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="../img/chicharriko_pet_round.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="../img/chicharriko_pet_round.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="../img/chicharriko_pet_round.png" class="d-block w-100" alt="...">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="carousel-item">
-      <img src="/img/chicharriko_pet_round.png" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-      <img src="/img/chicharriko_pet_round.png" class="d-block w-100" alt="...">
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-      </div>
-      <br>
-      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(20vh - 20px - 56px);">
-      <h1 >¿Quieres mejorar tu negocio y eventos, pero no sabes cómo?</h1>
-      <br>
-      <h2 >¡No te preocupes nosotras te ayudamos!</h2>
-      <br>
-      <h2 >No solo tenemos botanas naturales, navega por nuestro catálogo y date un gusto.</h2>
-      <br>
-      <button><a href="/html/catalogo.html">Catálogo</a></button>
-      </div>
-
+      </main>
       <!-------------------------------Fin de carrusel de inicio--------------------------------->
-      <img src="/img/separador amarillo.png" alt="separador amarillo" style="width: 100%; height: 100px; margin-top: 0px" />
+      <img src="../img/separador amarillo.png" alt="separador amarillo" style="width: 100%; height: 100px; margin-top: 0px" />
       <!-----------------------------------Inicio de tarjetas de productos--------------------->
+      <div class="favoritos">
+        <h2>Los favoritos</h2>
+      </div>
+      <div class="cards-row">
+        <div class="card" style="width: 18rem;">
+          <img src="https://estadonatural.com.mx/cdn/shop/products/manguito-con-chile-433216.png?v=1735790565&width=1080" class="card-img-top" alt="Manguito Enchilado">
+          <div class="card-body">
+            <h5 class="card-title">Manguito Enchilado</h5>
+            <p class="card-text">Mango deshidratado, azúcar y  ácido cítrico</p>
+          </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://estadonatural.com.mx/cdn/shop/files/pasa-con-chocolate-sin-azucar-963800.png" class="card-img-top" alt="Pasa con chocolate">
+          <div class="card-body">
+            <h5 class="card-title">Pasa con chocolate sin azúcar</h5>
+            <p class="card-text">Deliciosa uva pasa con chocolate sin azúcar</p>
+          </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <img src="https://estadonatural.com.mx/cdn/shop/products/pina-deshidratada-551945.png" class="card-img-top" alt="Piña Deshidratada">
+          <div class="card-body">
+            <h5 class="card-title">Piña Deshidratada</h5>
+            <p class="card-text">Deliciosa piña en rebanadas sin azúcar añadida</p>
+          </div>
+        </div>
+      </div> 
     </main>
-
-    <footer class="footer">
-      <!--Inicia footer-->
+    <footer class="footer"><!-----------------------------Inicia footer--------------->
       <div class="container">
         <div class="row">
           <div class="col-12 col-md-4">

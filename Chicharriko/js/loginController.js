@@ -2,7 +2,8 @@
 
 document.addEventListener("DOMContentLoaded", function() {
     // Seleccionar elementos del formulario
-    const form = document.querySelector("loginForm");
+    const form = document.getElementById("loginForm");;//antes const form = document.querySelector("loginForm");
+
     const emailInput = document.getElementById("email_login");
     const passwordInput = document.getElementById("password_login");
     const loginButton = document.querySelector(".btn-success");
@@ -68,8 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Buscar coincidencia de email y contraseña
         const foundUser = users.find(user => 
-          user.email === email && user.password === password
-        );
+          user.email === email && user.password === password);
         
         if (foundUser) {
           // Almacenar información del usuario en sessionStorage
@@ -80,11 +80,11 @@ document.addEventListener("DOMContentLoaded", function() {
           }));
           
           showMessage("¡Inicio de sesión exitoso! Redirigiendo...", "success");
+          // Redirigir después de un tiempo (comentado para que no redirija)
+          // setTimeout(() => {
+          //   window.location.href = "./index.html";
+          // }, 1500);
           
-          // Redireccionar después de 1.5 segundos
-          setTimeout(() => {
-            window.location.href = "./index.html";
-          }, 1500);
           
           return true;
         } else {
@@ -144,9 +144,10 @@ document.addEventListener("DOMContentLoaded", function() {
           
           showMessage("¡Inicio de sesión exitoso con autenticación local! Redirigiendo...", "success");
           
-          setTimeout(() => {
-            window.location.href = "./index.html";
-          }, 1500);
+          // Redirigir (comentado para que no redirija)
+          // setTimeout(() => {
+          //   window.location.href = "./index.html";
+          // }, 1500);
           
           return true;
         } else {
@@ -198,9 +199,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const user = JSON.parse(currentUser);
         showMessage(`Ya has iniciado sesión como ${user.nombre}. Redirigiendo...`, "info");
         
-        setTimeout(() => {
-          window.location.href = "./index.html";
-        }, 1500);
+        //Redirigir
+        //setTimeout(() => {
+       //window.location.href = "./index.html";
+        //}, 1500);*/
       }
     }
     
