@@ -32,6 +32,40 @@
       "email": "dany.rodgarcia@gmail.com",
       "password": "999999",
       "passwordUsuarioValidar": "999999"
+    },
+    {
+      "id": "5",
+      "nombre": "isaac",
+      "telefono": "3323456892",
+      "direccion": "Topiltzin #4490,Col.El Zapote",
+      "email": "issac@gmail.com",
+      "password": "111111",
+      "passwordUsuarioValidar": "111111"
+    },
+    {
+      "id": "6",
+      "nombre": "ejemp",
+      "telefono": "1111111111",
+      "direccion": "calle 1 no2",
+      "email": "ejem@correo.com",
+      "password": "111111",
+      "passwordUsuarioValidar": "111111"
+    },
+    {
+      "id": "7",
+      "nombre": "danilo",
+      "telefono": "5562555137",
+      "direccion": "Topiltzin #4490,Col.El Zapote",
+      "email": "danilo@gmail.com",
+      "password": "333333"
+    },
+    {
+      "id": "8",
+      "nombre": "Itzel Padilla",
+      "telefono": "3349780956",
+      "direccion": "Arenales",
+      "email": "iztel.padilla@gmail.com",
+      "password": "123456"
     }
   ],
   "userId": 1

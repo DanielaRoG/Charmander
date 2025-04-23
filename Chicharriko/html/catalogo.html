@@ -72,8 +72,7 @@
             data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -90,11 +89,8 @@
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link subtitulo" href="../html/nosotros.html"
-                  >Nosotras</a
-                >
+                <a class="nav-link subtitulo" href="../html/nosotros.html">Nosotras</a>
               </li>
-
               <li class="nav-item">
                 <a
                   class="nav-link subtitulo"
@@ -141,37 +137,65 @@
         <h1 class="text-center">Lista de Productos</h1>
 
         <!-- Formulario para agregar nuevos items -->
-        <form id="newItemForm" class="mb-4">
+        <form id="nuevoItemFormulario" class="mb-4">
           <div class="mb-3">
-            <label for="newItemNameInput" class="form-label"
+            <label for="nuevoItemNombreInput" class="form-label"
               >Nombre del producto:</label
             >
             <input
               type="text"
               class="form-control"
-              id="newItemNameInput"
+              id="nuevoItemNombreInput"
               required
             />
           </div>
           <div class="mb-3">
-            <label for="newItemDescription" class="form-label"
-              >Descripción:</label
+            <label for="nuevoItemPrecioInput" class="form-label">Precio:</label>
+            <input
+              type="number"
+              step="0.01"
+              max="1000"
+              min="1"
+              class="form-control"
+              id="nuevoItemPrecioInput"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="nuevoItemExistenciaInput" class="form-label"
+              >Existencia:</label
             >
             <input
-              type="text"
+              type="number"
+              step="1"
+              min="0"
               class="form-control"
-              id="newItemDescription"
+              id="nuevoItemExistenciaInput"
               required
             />
           </div>
           <div class="mb-3">
-            <label for="newItemImageInput" class="form-label"
+            <label for="nuevoItemCategoriaInput" class="form-label"
+              >Categoría:</label
+            >
+            <input
+              type="number"
+              step="10"
+              min="10"
+              max="30"
+              class="form-control"
+              id="nuevoItemCategoriaInput"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="nuevoItemImagenInput" class="form-label"
               >URL de la imagen:</label
             >
             <input
               type="url"
               class="form-control"
-              id="newItemImageInput"
+              id="nuevoItemImagenInput"
               placeholder="https://ejemplo.com/imagen.jpg"
               required
             />
@@ -200,19 +224,19 @@
           <div class="col-12 col-md-2">
             <h3 class="subtitulo">COMPAÑÍA</h3>
             <ul class="lista-texto">
-              <li><a href="../html/nosotros.html">Nosotras</a></li>
-              <li><a href="#mision">Misión</a></li>
-              <li><a href="#vision">Visión</a></li>
-              <li><a href="#valores">Valores</a></li>
+              <li style="list-style-type: none"><a href="../html/nosotros.html">Nosotras</a></li>
+              <li style="list-style-type: none"><a href="#mision">Misión</a></li>
+              <li style="list-style-type: none"><a href="#vision">Visión</a></li>
+              <li style="list-style-type: none"><a href="#valores">Valores</a></li>
             </ul>
           </div>
           <div class="col-12 col-md-3">
             <h3 class="subtitulo">MÁS INFORMACIÓN</h3>
             <ul class="lista-texto">
-              <li><a href="../html/catalogo.html">Catálogo</a></li>
-              <li><a href="#">Mayoreo</a></li>
-              <li><a href="#">Aviso de privacidad</a></li>
-              <li><a href="#">Términos y Condiciones</a></li>
+              <li style="list-style-type: none"><a href="../html/catalogo.html">Catálogo</a></li>
+              <li style="list-style-type: none"><a href="#">Mayoreo</a></li>
+              <li style="list-style-type: none"><a href="#">Aviso de privacidad</a></li>
+              <li style="list-style-type: none"><a href="#">Términos y Condiciones</a></li>
             </ul>
           </div>
           <div class="col-12 col-md-3">
