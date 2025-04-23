@@ -13,6 +13,53 @@ main {
   flex-grow: 1;
 }
 
+.favoritos {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cards-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* permite que se acomoden abajo si no cabe en horizontal */
+}
+.card {
+  border: 2px solid #61210f;
+  border-radius: 15px;
+  background-color: #f7e7ce;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  text-align: center; /* centra el título */
+}
+
+.card-text {
+  color: #333;
+  text-align: center; /* justifica el texto */
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+
+
+/* Responsivo para pantallas de máximo 768px (tablets y móviles) */
+@media (max-width: 768px) {
+  .cards-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 
 /* Estilos generales para footer (mantén los que necesites) */
 /* Footer */

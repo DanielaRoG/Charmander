@@ -57,6 +57,60 @@ document.addEventListener("DOMContentLoaded", () => {
   // Llamamos la función para configurar los mensajes personalizados
   setCustomValidationMessages();
 
+  // VALIDACIÓN PERSONALIZADA PARA MENSAJES HTML5
+  function setCustomValidationMessages() {
+    const nombreInput = document.getElementById("nuevoItemNombreInput");
+    const precioInput = document.getElementById("nuevoItemPrecioInput");
+    const existenciaInput = document.getElementById("nuevoItemExistenciaInput");
+    const categoriaInput = document.getElementById("nuevoItemCategoriaInput");
+    const imagenInput = document.getElementById("nuevoItemImagenInput");
+
+    nombreInput.addEventListener("invalid", function () {
+      this.setCustomValidity(
+        "Por favor, ingresa un nombre válido (sin caracteres especiales)."
+      );
+    });
+    nombreInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+
+    precioInput.addEventListener("invalid", function () {
+      this.setCustomValidity("El precio debe estar entre $1.00 y $1000.00.");
+    });
+    precioInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+
+    existenciaInput.addEventListener("invalid", function () {
+      this.setCustomValidity("La existencia debe ser 0 o mayor.");
+    });
+    existenciaInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+
+    categoriaInput.addEventListener("invalid", function () {
+      this.setCustomValidity("La categoría debe ser un número entre 10 y 30.");
+    });
+    categoriaInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+
+    imagenInput.addEventListener("invalid", function () {
+      this.setCustomValidity(
+        "Por favor, proporciona una URL válida de imagen."
+      );
+    });
+    imagenInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+  }
+
+  // LLAMAR LA FUNCIÓN DE VALIDACIÓN PERSONALIZADA
+  setCustomValidationMessages();
+
+  // Llamamos la función para configurar los mensajes personalizados
+  setCustomValidationMessages();
+
   // VALIDAR INPUT
   function validateInput(input) {
     const validationRegex = /^[a-zA-Z0-9\s.,!?()\-áéíóúÁÉÍÓÚñÑ]+$/;
