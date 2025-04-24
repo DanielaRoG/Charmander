@@ -66,6 +66,22 @@
       "direccion": "Arenales",
       "email": "iztel.padilla@gmail.com",
       "password": "123456"
+    },
+    {
+      "id": "9",
+      "nombre": "Itzel",
+      "telefono": "3314709671",
+      "direccion": "rio blanco",
+      "email": "lokita@gmail.com",
+      "password": "789456"
+    },
+    {
+      "id": "10",
+      "nombre": "Jenny",
+      "telefono": "1234567899",
+      "direccion": "rio blanco",
+      "email": "jenny@gmail.com",
+      "password": "123456"
     }
   ],
   "userId": 1
