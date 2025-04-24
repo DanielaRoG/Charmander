@@ -2,7 +2,7 @@
 
 body {
   background-color: #f7e7ce;
-  font-family: 'Roboto', sans-serif; /* Define una fuente base */
+  font-family: "Roboto", sans-serif; /* Define una fuente base */
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -30,7 +30,7 @@ main {
   border: 2px solid #61210f;
   border-radius: 15px;
   background-color: #f7e7ce;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: box-shadow 0.3s ease;
 }
@@ -50,8 +50,6 @@ main {
   transform: scale(1.05);
 }
 
-
-
 /* Responsivo para pantallas de máximo 768px (tablets y móviles) */
 @media (max-width: 768px) {
   .cards-row {
@@ -60,7 +58,6 @@ main {
   }
 }
 
-
 /* Estilos generales para footer (mantén los que necesites) */
 /* Footer */
 footer {
@@ -68,14 +65,19 @@ footer {
   color: #000;
   padding: 40px 20px; /* Aumenta el padding para más espacio */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ajusta el minmax para mejor distribución */
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(300px, 1fr)
+  ); /* Ajusta el minmax para mejor distribución */
   gap: 20px;
   place-items: start; /* Alinea los elementos al inicio */
   font-size: 16px; /* Tamaño de fuente base para el footer */
 }
 
-footer h1, footer h3 { /* Estilos para los títulos del footer */
-  font-family: 'Inter', sans-serif;
+footer h1,
+footer h3 {
+  /* Estilos para los títulos del footer */
+  font-family: "Inter", sans-serif;
   margin-bottom: 15px;
 }
 
@@ -308,7 +310,6 @@ a:active {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  
 }
 
 .contact-form button:hover {
@@ -316,10 +317,11 @@ a:active {
   color: #fff;
 }
 
-
 /* Estilos del formulario de login */
 .gradient-form {
-  min-height: calc(100vh - 150px); /* Ajusta según el tamaño del header/footer */
+  min-height: calc(
+    100vh - 150px
+  ); /* Ajusta según el tamaño del header/footer */
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -359,7 +361,9 @@ a:active {
 /* Media query para pantallas grandes (ej. desktops) */
 @media (min-width: 992px) {
   .gradient-form {
-    min-height: calc(100vh - 150px); /* Ajusta según el tamaño del header/footer */
+    min-height: calc(
+      100vh - 150px
+    ); /* Ajusta según el tamaño del header/footer */
   }
 }
 
@@ -370,7 +374,8 @@ a:active {
     text-align: center;
   }
 
-  .col-md-3, .col-md-9 {
+  .col-md-3,
+  .col-md-9 {
     width: 100%;
     border-radius: 0.5rem;
   }
@@ -404,4 +409,89 @@ button {
   border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+/* CARRITO */
+
+.c-inter {
+  font-family: "Inter", sans-serif;
+  font-size: 28px;
+  text-transform: uppercase;
+}
+
+.c-inter1 {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.c-inter2 {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+}
+
+.table thead {
+  --bs-table-bg: #607744 !important;
+  --bs-table-color: #fff !important;
+}
+
+.table {
+  --bs-table-bg: transparent !important;
+  border-radius: 10px;
+  overflow: hidden; /* Esto es útil si quieres que el contenido como la tabla también respete el borde redondeado */
+}
+
+.table tbody {
+  vertical-align: middle !important;
+}
+.table tbody td {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #000 !important;
+}
+
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+  border-color: none;
+  border-style: none;
+  border-width: 0;
+}
+
+.b-g-c {
+  background-color: #607744;
+  border-radius: 15px;
+  border: none;
+}
+
+.b-g-c:hover {
+  background-color: #34623f;
+  border: none;
+  color: #f7e7ce;
+}
+
+.apli-btn {
+  background-color: #607744;
+  border-radius: 15px;
+  border: none;
+  color: #fff;
+}
+
+.apli-btn:hover {
+  background-color: #34623f;
+  border: none;
+  color: #f7e7ce;
+}
+
+.tam-fijo {
+  max-height: 500px; /* Ajusta este valor según lo necesites */
+  overflow-y: auto; /* Añade una barra de scroll vertical cuando el contenido se desborda */
+}
+
+.inter-text1 {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
 }

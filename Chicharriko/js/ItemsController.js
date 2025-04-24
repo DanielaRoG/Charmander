@@ -28,9 +28,61 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     existenciaInput.addEventListener("invalid", function () {
+      this.setCustomValidity("La existencia debe ser 0 o mayor.");
+    });
+    existenciaInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+
+    categoriaInput.addEventListener("invalid", function () {
+      this.setCustomValidity("La categoría debe ser un número entre 10 y 30.");
+    });
+    categoriaInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+
+    imagenInput.addEventListener("invalid", function () {
       this.setCustomValidity(
-        "La existencia debe ser 0 o mayor."
+        "Por favor, proporciona una URL válida de imagen."
       );
+    });
+    imagenInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+  }
+
+  // LLAMAR LA FUNCIÓN DE VALIDACIÓN PERSONALIZADA
+  setCustomValidationMessages();
+
+  // Llamamos la función para configurar los mensajes personalizados
+  setCustomValidationMessages();
+
+  // VALIDACIÓN PERSONALIZADA PARA MENSAJES HTML5
+  function setCustomValidationMessages() {
+    const nombreInput = document.getElementById("nuevoItemNombreInput");
+    const precioInput = document.getElementById("nuevoItemPrecioInput");
+    const existenciaInput = document.getElementById("nuevoItemExistenciaInput");
+    const categoriaInput = document.getElementById("nuevoItemCategoriaInput");
+    const imagenInput = document.getElementById("nuevoItemImagenInput");
+
+    nombreInput.addEventListener("invalid", function () {
+      this.setCustomValidity(
+        "Por favor, ingresa un nombre válido (sin caracteres especiales)."
+      );
+    });
+    nombreInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+
+    precioInput.addEventListener("invalid", function () {
+      this.setCustomValidity("El precio debe estar entre $1.00 y $1000.00.");
+    });
+    precioInput.addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+
+    existenciaInput.addEventListener("invalid", function () {
+      this.setCustomValidity("La existencia debe ser 0 o mayor.");
     });
     existenciaInput.addEventListener("input", function () {
       this.setCustomValidity("");
@@ -104,9 +156,16 @@ document.addEventListener("DOMContentLoaded", () => {
             <p class="card-text">$ ${item.precio.toFixed(2)} por 100 grs</p>
              <p class="card-text">Existencias: ${item.existencia}</p>
               <p class="card-text">Categoría: ${item.categoria}</p>
+            <div class="d-flex justify-content-center gap-2">
+               <button class="btn btn-success agregar-carrito" data-id="${
+                 item.id
+               }">
+          <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+        </button>
             <button class="btn btn-danger" data-id="${
               item.id
             }">Eliminar</button>
+            </div>
           </div>
         </div>
       `;
@@ -121,6 +180,44 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  // Función para agregar un item al carrito
+  function agregarAlCarrito(itemId) {
+    let carrito = localStorage.getItem("carrito");
+    carrito = carrito ? JSON.parse(carrito) : [];
+
+    // Verificar si el item ya está en el carrito
+    const itemExistente = carrito.find((item) => item.id === itemId);
+
+    if (itemExistente) {
+      // Si ya existe, puedes incrementar la cantidad o mostrar un mensaje
+      console.log(`El item con ID ${itemId} ya está en el carrito.`);
+      showAlert("Este producto ya está en el carrito.", "warning");
+      return;
+    }
+
+    // Si no existe, buscar el item en la lista de productos y agregarlo al carrito
+    fetch(`${API_URL}/${itemId}`)
+      .then((response) => response.json())
+      .then((item) => {
+        carrito.push({ ...item, cantidad: 1 }); // Añadir el item con cantidad 1
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        showAlert(`"${item.nombre}" se ha añadido al carrito!`, "success");
+        console.log("Carrito actualizado:", carrito);
+      })
+      .catch((error) => {
+        showAlert("Error al agregar el producto al carrito.", "danger");
+        console.error("Error al obtener el item:", error);
+      });
+  }
+
+  // Event listener para los botones "Agregar al carrito"
+  itemList.addEventListener("click", (event) => {
+    if (event.target.classList.contains("agregar-carrito")) {
+      const itemId = event.target.getAttribute("data-id");
+      agregarAlCarrito(itemId);
+    }
+  });
 
   // CARGAR PRODUCTOS
   async function loadItems() {
