@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
     let valid = true;
 
@@ -102,56 +102,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!valid) return;
 
-    // Validación de email duplicado y registro
-    fetch("http://localhost:3002/users")
-      .then(response => response.json())
-      .then(users => {
-        const emailExiste = users.some(user => user.email === emailInput.value.trim());
+    try {
+      // Verificar si el email ya existe (usa "correo" para coincidir con backend)
+      const responseUsers = await fetch("http://localhost:8080/api/Chicharrikos/cliente");
+      if (!responseUsers.ok) throw new Error("Error al obtener usuarios");
+      const users = await responseUsers.json();
 
-        if (emailExiste) {
-          alert("El correo ya está registrado. Intenta con otro.");
-          return;
-        }
+      const emailExiste = users.some(user => user.correo === emailInput.value.trim());
+      if (emailExiste) {
+        alert("El correo ya está registrado. Intenta con otro.");
+        return;
+      }
 
-        let newId = 1;
-        if (users.length > 0) {
-          const lastUserId = Math.max(...users.map(user => parseInt(user.id, 10)));
-          newId = lastUserId + 1;
-        }
+      // Crear nuevo usuario (sin id, lo genera el backend)
+      const nuevoUsuario = {
+        nombre: nombreInput.value.trim(),
+        telefono: telefonoInput.value.trim(),
+        direccion: direccionInput.value.trim(),
+        correo: emailInput.value.trim(),
+        contraseña: passwordInput.value.trim()
+      };
 
-        const nuevoUsuario = {
-          id: newId.toString(),
-          nombre: nombreInput.value.trim(),
-          telefono: telefonoInput.value.trim(),
-          direccion: direccionInput.value.trim(),
-          email: emailInput.value.trim(),
-          password: passwordInput.value.trim()
-        };
-
-        return fetch("http://localhost:3002/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(nuevoUsuario)
-        });
-      })
-      .then(response => {
-        if (response && response.ok) {
-          return response.json();
-        } else if (response) {
-          throw new Error("Error al registrar usuario");
-        }
-      })
-      .then(data => {
-        if (data) {
-          alert("Usuario agregado exitosamente!");
-          form.reset();
-        }
-      })
-      .catch(error => {
-        console.error("Error al registrar usuario:", error);
-        alert("Hubo un error al registrar el usuario. Inténtalo de nuevo.");
+      const responseCreate = await fetch("http://localhost:8080/api/Chicharrikos/cliente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(nuevoUsuario)
       });
+
+      if (!responseCreate.ok) {
+        const errorText = await responseCreate.text();
+        throw new Error(`Error al registrar usuario: ${errorText}`);
+      }
+
+      const data = await responseCreate.json();
+      alert("Usuario agregado exitosamente!");
+      form.reset();
+
+    } catch (error) {
+      console.error("Error al registrar usuario:", error);
+      alert("Hubo un error al registrar el usuario. Inténtalo de nuevo.");
+    }
   });
 });
