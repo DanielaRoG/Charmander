@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("nuevoItemFormulario");
   const itemList = document.getElementById("list-items");
-  const API_URL = "http://localhost:3000/items";
+  // URL ajustada a tu backend Spring Boot
+  const API_URL = "http://localhost:8080/api/Chicharrikos/productos";
 
   // VALIDACIÓN PERSONALIZADA PARA MENSAJES HTML5
   function setCustomValidationMessages() {
@@ -52,63 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // LLAMAR LA FUNCIÓN DE VALIDACIÓN PERSONALIZADA
-  setCustomValidationMessages();
-
-  // Llamamos la función para configurar los mensajes personalizados
-  setCustomValidationMessages();
-
-  // VALIDACIÓN PERSONALIZADA PARA MENSAJES HTML5
-  function setCustomValidationMessages() {
-    const nombreInput = document.getElementById("nuevoItemNombreInput");
-    const precioInput = document.getElementById("nuevoItemPrecioInput");
-    const existenciaInput = document.getElementById("nuevoItemExistenciaInput");
-    const categoriaInput = document.getElementById("nuevoItemCategoriaInput");
-    const imagenInput = document.getElementById("nuevoItemImagenInput");
-
-    nombreInput.addEventListener("invalid", function () {
-      this.setCustomValidity(
-        "Por favor, ingresa un nombre válido (sin caracteres especiales)."
-      );
-    });
-    nombreInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-
-    precioInput.addEventListener("invalid", function () {
-      this.setCustomValidity("El precio debe estar entre $1.00 y $1000.00.");
-    });
-    precioInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-
-    existenciaInput.addEventListener("invalid", function () {
-      this.setCustomValidity("La existencia debe ser 0 o mayor.");
-    });
-    existenciaInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-
-    categoriaInput.addEventListener("invalid", function () {
-      this.setCustomValidity("La categoría debe ser un número entre 10 y 30.");
-    });
-    categoriaInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-
-    imagenInput.addEventListener("invalid", function () {
-      this.setCustomValidity(
-        "Por favor, proporciona una URL válida de imagen."
-      );
-    });
-    imagenInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-  }
-
-  // LLAMAR LA FUNCIÓN DE VALIDACIÓN PERSONALIZADA
-  setCustomValidationMessages();
-
-  // Llamamos la función para configurar los mensajes personalizados
   setCustomValidationMessages();
 
   // VALIDAR INPUT
@@ -142,43 +86,98 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  // RENDERIZAR PRODUCTOS
-  function renderItems(items) {
-    itemList.innerHTML = "";
-    items.forEach((item) => {
-      const card = document.createElement("div");
-      card.classList.add("col-md-4", "mb-3");
-      card.innerHTML = `
-        <div class="card">
-          <img src="${item.imageUrl}" class="card-img-top" alt="${item.nombre}">
-          <div class="card-body">
-            <h5 class="card-title">${item.nombre}</h5>
-            <p class="card-text">$ ${item.precio.toFixed(2)} por 100 grs</p>
-             <p class="card-text">Existencias: ${item.existencia}</p>
-              <p class="card-text">Categoría: ${item.categoria}</p>
-            <div class="d-flex justify-content-center gap-2">
-               <button class="btn btn-success agregar-carrito" data-id="${
-                 item.id
-               }">
-          <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
-        </button>
-            <button class="btn btn-danger" data-id="${
-              item.id
-            }">Eliminar</button>
-            </div>
+  // FUNCIÓN COMBINADA PARA CARGAR Y RENDERIZAR PRODUCTOS
+  async function loadAndRenderProducts() {
+    try {
+      // Mostrar indicador de carga
+      itemList.innerHTML = `
+        <div class="col-12 text-center my-3">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
           </div>
+          <p class="mt-2">Cargando productos...</p>
         </div>
       `;
-      itemList.appendChild(card);
-    });
+      
+      const response = await fetch(API_URL);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
+      }
+      
+      const items = await response.json();
+      
+      // Verificar si hay productos
+      if (!items || items.length === 0) {
+        itemList.innerHTML = `
+          <div class="col-12 text-center my-4">
+            <div class="alert alert-info">
+              <i class="fa-solid fa-info-circle me-2"></i>
+              No hay productos disponibles en este momento.
+            </div>
+            <p>Agrega un nuevo producto utilizando el formulario.</p>
+          </div>
+        `;
+        return;
+      }
 
-    // Asignar evento a todos los botones de eliminar
-    document.querySelectorAll(".btn-danger").forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const id = btn.getAttribute("data-id");
-        await deleteItem(Number(id));
+      // Renderizar productos
+      itemList.innerHTML = "";
+      items.forEach((item) => {
+        const imageSrc = item.url && item.url.trim() !== "" ? item.url : "../img/placeholder.jpg";
+        console.log(`Cargando imagen para ${item.nombre}: ${imageSrc}`);
+
+        const card = document.createElement("div");
+        card.classList.add("col-md-4", "mb-3");
+        card.innerHTML = `
+          <div class="card h-100 shadow-sm">
+            <img src="${imageSrc}" class="card-img-top" alt="${item.nombre}" 
+                 style="height: 200px; object-fit: cover;"
+                 onerror="this.src='../img/placeholder.jpg'">
+            <div class="card-body">
+              <h5 class="card-title">${item.nombre}</h5>
+              <p class="card-text">$ ${item.precio.toFixed(2)} por 100 grs</p>
+              <p class="card-text">Existencias: ${item.existencia}</p>
+              <p class="card-text">Categoría: ${item.categoria?.id || 'N/A'}</p>
+              <div class="d-flex justify-content-center gap-2">
+                <button class="btn btn-success agregar-carrito" data-id="${item.idproducto}">
+                  <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+                </button>
+                <button class="btn btn-danger" data-id="${item.idproducto}">
+                  <i class="fa-solid fa-trash"></i> Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        itemList.appendChild(card);
       });
-    });
+
+      // Asignar evento a todos los botones de eliminar
+      document.querySelectorAll(".btn-danger").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+            const id = btn.getAttribute("data-id");
+            await deleteItem(Number(id));
+          }
+        });
+      });
+      
+      console.log(`Se cargaron ${items.length} productos correctamente.`);
+      
+    } catch (error) {
+      itemList.innerHTML = `
+        <div class="col-12 text-center my-4">
+          <div class="alert alert-danger">
+            <i class="fa-solid fa-exclamation-triangle me-2"></i>
+            Error al cargar los productos
+          </div>
+          <p>${error.message}</p>
+        </div>
+      `;
+      showAlert("No se pudieron cargar los productos: " + error.message);
+      console.error("Error al cargar los productos:", error);
+    }
   }
 
   // Función para agregar un item al carrito
@@ -187,18 +186,24 @@ document.addEventListener("DOMContentLoaded", () => {
     carrito = carrito ? JSON.parse(carrito) : [];
 
     // Verificar si el item ya está en el carrito
-    const itemExistente = carrito.find((item) => item.id === itemId);
+    const itemExistente = carrito.find((item) => item.idproducto === Number(itemId));
 
     if (itemExistente) {
-      // Si ya existe, puedes incrementar la cantidad o mostrar un mensaje
-      console.log(`El item con ID ${itemId} ya está en el carrito.`);
-      showAlert("Este producto ya está en el carrito.", "warning");
+      // Si ya existe, incrementamos la cantidad
+      itemExistente.cantidad = (itemExistente.cantidad || 1) + 1;
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      showAlert(`Se ha aumentado la cantidad de "${itemExistente.nombre}" en el carrito.`, "success");
       return;
     }
 
     // Si no existe, buscar el item en la lista de productos y agregarlo al carrito
     fetch(`${API_URL}/${itemId}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((item) => {
         carrito.push({ ...item, cantidad: 1 }); // Añadir el item con cantidad 1
         localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -219,18 +224,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // CARGAR PRODUCTOS
-  async function loadItems() {
-    try {
-      const response = await fetch(API_URL);
-      const items = await response.json();
-      renderItems(items);
-    } catch (error) {
-      showAlert("No se pudieron cargar los productos.");
-      console.error(error);
-    }
-  }
-
   // AGREGAR PRODUCTO
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -242,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const existencia = parseInt(
       document.getElementById("nuevoItemExistenciaInput").value.trim()
     );
-    const categoria = document
+    const categoriaValue = document
       .getElementById("nuevoItemCategoriaInput")
       .value.trim();
     const imageUrl = document
@@ -254,17 +247,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (!validateInput(precio)) {
+    if (!validateInput(precio.toString())) {
       showAlert("El precio contiene caracteres no permitidos.");
       return;
     }
 
-    if (!validateInput(existencia)) {
+    if (!validateInput(existencia.toString())) {
       showAlert("La existencia contiene caracteres no permitidos.");
       return;
     }
 
-    if (!validateInput(categoria)) {
+    if (!validateInput(categoriaValue)) {
       showAlert("Categoria fuera de límite.");
       return;
     }
@@ -275,53 +268,74 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // Obtener los productos actuales
-      const response = await fetch(API_URL);
-      const items = await response.json();
-
-      // Obtener el siguiente ID (empezando desde 0 si no hay productos)
-      const nextId =
-        items.length > 0
-          ? String(Math.max(...items.map((item) => Number(item.id))) + 1)
-          : "1"; // Si no hay productos, empieza desde "1"
-
+      // Ajustamos el objeto para que coincida con el modelo del backend
       const nuevoItem = {
-        id: nextId,
-        nombre,
-        precio,
-        existencia,
-        categoria,
-        imageUrl,
+        nombre: nombre,
+        precio: precio,
+        existencia: existencia,
+        url: imageUrl, // Incluimos el campo url que existe en el modelo Producto
+        categoria: {
+          id: parseInt(categoriaValue) // Enviamos un objeto con el ID de la categoría
+        }
       };
 
-      await fetch(API_URL, {
+      console.log("Datos enviados al backend:", nuevoItem); // Depuración
+
+      const response = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(nuevoItem),
       });
 
+      if (!response.ok) {
+        let errorMessage = "Error al guardar el producto";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          // Si no podemos parsear el JSON, usamos el texto de la respuesta
+          const errorText = await response.text();
+          errorMessage = errorText || errorMessage;
+        }
+        throw new Error(errorMessage);
+      }
+
       showAlert("Producto agregado exitosamente!", "success");
       form.reset();
-      loadItems();
+      loadAndRenderProducts(); // Usar la nueva función combinada
     } catch (error) {
-      showAlert("Hubo un error al guardar el producto.");
-      console.error(error);
+      showAlert(`Error al guardar el producto: ${error.message}`, "danger");
+      console.error("Error al agregar producto:", error.message);
     }
   });
 
   // ELIMINAR PRODUCTO
   async function deleteItem(id) {
     try {
-      await fetch(`${API_URL}/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
       });
-      loadItems();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      showAlert("Producto eliminado exitosamente!", "success");
+      loadAndRenderProducts(); // Usar la nueva función combinada
+      
+      // Actualizar el carrito si es necesario
+      let carrito = localStorage.getItem("carrito");
+      if (carrito) {
+        carrito = JSON.parse(carrito);
+        const carritoActualizado = carrito.filter(item => item.idproducto !== id);
+        localStorage.setItem("carrito", JSON.stringify(carritoActualizado));
+      }
     } catch (error) {
-      showAlert("No se pudo eliminar el producto.");
-      console.error(error);
+      showAlert(`No se pudo eliminar el producto: ${error.message}`, "danger");
+      console.error("Error al eliminar producto:", error);
     }
   }
 
-  // INICIAR
-  loadItems();
+  // INICIAR CON LA NUEVA FUNCIÓN COMBINADA
+  loadAndRenderProducts();
 });

@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const emailInput = document.getElementById("email_login");
   const passwordInput = document.getElementById("password_login");
   const messageContainer = document.getElementById("loginMessages");
+  // URL base para tu backend Spring Boot
+  const API_URL_BASE = "http://localhost:8080/api/Chicharrikos/cliente";
 
   function showMessage(message, type) {
     messageContainer.innerHTML = `
@@ -40,55 +42,41 @@ document.addEventListener("DOMContentLoaded", function() {
 
   async function authenticateUser(email, password) {
     try {
-      const response = await fetch("http://localhost:3002/users");
-      if (!response.ok) throw new Error("Error al conectar con el servidor");
-      const users = await response.json();
+      // Opción 1: Usar POST con un endpoint fijo y enviar email/password en el cuerpo
+      const url = `${API_URL_BASE}/login`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        }),
+      });
 
-      const foundUser = users.find(user => user.email === email && user.password === password);
-
-      if (foundUser) {
-        sessionStorage.setItem("currentUser", JSON.stringify({
-          id: foundUser.id,
-          nombre: foundUser.nombre,
-          email: foundUser.email
-        }));
-        showMessage("¡Inicio de sesión exitoso! Redirigiendo...", "success");
-        setTimeout(() => {
-          window.location.href = "../html/index.html";
-        }, 3000);
-        return true;
-      } else {
-        showMessage("Email o contraseña incorrectos", "danger");
-        return false;
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error de autenticación: ${response.status} - ${errorText}`);
       }
+
+      // Si la autenticación es exitosa, obtenemos los datos del usuario desde la respuesta
+      const userData = await response.json();
+      sessionStorage.setItem("currentUser", JSON.stringify({
+        id: userData.id,
+        nombre: userData.nombre || userData.username,
+        email: userData.email,
+        token: userData.token // Guardamos el token si el backend lo devuelve
+      }));
+      showMessage("¡Inicio de sesión exitoso! Redirigiendo...", "success");
+      setTimeout(() => {
+        window.location.href = "../html/index.html";
+      }, 3000);
+      return true;
     } catch (error) {
       console.error("Error de autenticación:", error);
-      showMessage(`Error: ${error.message}. Usando autenticación local.`, "warning");
-
-      const usersLocal = [
-        { id: "1", nombre: "Denisse Hernández", email: "denissehernandez2002@gmail.com", password: "1234567" },
-        { id: "2", nombre: "Aylen Vázquez", email: "denissehernandez2002@gmail.com", password: "lkmmlmlkmlkml" },
-        { id: "3", nombre: "Aylen Vázquez", email: "denissehernandez2002@gmail.com", password: "sjnsdkjsdshkhsjkd" },
-        { id: "4", nombre: "daniela", email: "dany.rodgarcia@gmail.com", password: "999999" }
-      ];
-
-      const localUser = usersLocal.find(user => user.email === email && user.password === password);
-
-      if (localUser) {
-        sessionStorage.setItem("currentUser", JSON.stringify({
-          id: localUser.id,
-          nombre: localUser.nombre,
-          email: localUser.email
-        }));
-        showMessage("¡Inicio de sesión exitoso con autenticación local! Redirigiendo...", "success");
-        setTimeout(() => {
-          window.location.href = "../html/index.html";
-        }, 3000);
-        return true;
-      } else {
-        showMessage("Email o contraseña incorrectos", "danger");
-        return false;
-      }
+      showMessage("Email o contraseña incorrectos. Por favor, intenta de nuevo.", "danger");
+      return false;
     }
   }
 
