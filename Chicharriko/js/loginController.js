@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("loginForm");
   const emailInput = document.getElementById("email_login");
   const passwordInput = document.getElementById("password_login");
@@ -8,11 +8,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function showMessage(message, type) {
     messageContainer.innerHTML = `
-      <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    `;
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
   }
 
   function validateFields() {
@@ -42,57 +42,74 @@ document.addEventListener("DOMContentLoaded", function() {
 
   async function authenticateUser(email, password) {
     try {
-      // Opción 1: Usar POST con un endpoint fijo y enviar email/password en el cuerpo
-      const url = `${API_URL_BASE}/login`;
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:8080/api/Chicharrikos/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ correo: email, contraseña: password }),
+        }
+      );
 
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Error de autenticación: ${response.status} - ${errorText}`);
+        try {
+          const errorBody = await response.json();
+          showMessage(
+            `Error al iniciar sesión: ${
+              errorBody.mensaje || "Credenciales inválidas"
+            }`,
+            "danger"
+          );
+        } catch (e) {
+          showMessage(
+            `Error al iniciar sesión: Credenciales inválidas`,
+            "danger"
+          );
+          console.error("Error al parsear error JSON:", e);
+        }
+        return false;
       }
 
-      // Si la autenticación es exitosa, obtenemos los datos del usuario desde la respuesta
-      const userData = await response.json();
-      sessionStorage.setItem("currentUser", JSON.stringify({
-        id: userData.id,
-        nombre: userData.nombre || userData.username,
-        email: userData.email,
-        token: userData.token // Guardamos el token si el backend lo devuelve
-      }));
-      showMessage("¡Inicio de sesión exitoso! Redirigiendo...", "success");
-      setTimeout(() => {
-        window.location.href = "../html/index.html";
-      }, 3000);
-      return true;
+      try {
+        const data = await response.json();
+        showMessage(data.mensaje || "Inicio de sesión exitoso", "success"); // Asume que la respuesta JSON tiene un campo "mensaje"
+        setTimeout(() => {
+          window.location.href = "../html/index.html"; // Redirige a la página principal
+        }, 2000);
+        return true;
+      } catch (e) {
+        showMessage("Error al procesar la respuesta del servidor", "danger");
+        console.error("Error al parsear JSON de éxito:", e);
+        return false;
+      }
     } catch (error) {
       console.error("Error de autenticación:", error);
-      showMessage("Email o contraseña incorrectos. Por favor, intenta de nuevo.", "danger");
+      showMessage(`Error al conectar con el servidor: ${error}`, "danger");
       return false;
     }
   }
 
   emailInput.addEventListener("input", () => {
-    if (emailInput.classList.contains("is-invalid") && emailInput.value.trim()) {
+    if (
+      emailInput.classList.contains("is-invalid") &&
+      emailInput.value.trim()
+    ) {
       emailInput.classList.remove("is-invalid");
     }
   });
 
   passwordInput.addEventListener("input", () => {
-    if (passwordInput.classList.contains("is-invalid") && passwordInput.value.trim()) {
+    if (
+      passwordInput.classList.contains("is-invalid") &&
+      passwordInput.value.trim()
+    ) {
       passwordInput.classList.remove("is-invalid");
     }
   });
 
-  form.addEventListener("submit", async function(e) {
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
     if (validateFields()) {
       const email = emailInput.value.trim();
@@ -101,15 +118,15 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Opcional: verificar si ya hay usuario logueado
+  // Opcional: verificar si ya hay usuario logueado (tendrás que adaptar esto si implementas sesiones en el backend)
   function checkLoggedInStatus() {
     const currentUser = sessionStorage.getItem("currentUser");
     if (currentUser) {
       const user = JSON.parse(currentUser);
       showMessage(`Ya has iniciado sesión como ${user.nombre}.`, "info");
-      /*setTimeout(() => {
-        window.location.href = "../html/index.html";
-      }, 3000);*/
+      // setTimeout(() => {
+      //     window.location.href = "../html/index.html";
+      // }, 3000);
     }
   }
 

@@ -1,7 +1,7 @@
+// ItemsController.js
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("nuevoItemFormulario");
   const itemList = document.getElementById("list-items");
-  // URL ajustada a tu backend Spring Boot
   const API_URL = "http://localhost:8080/api/Chicharrikos/productos";
 
   // VALIDACIÓN PERSONALIZADA PARA MENSAJES HTML5
@@ -79,79 +79,48 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     alertContainer.innerHTML = `
-      <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    `;
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
   }
 
-  // FUNCIÓN COMBINADA PARA CARGAR Y RENDERIZAR PRODUCTOS
-  async function loadAndRenderProducts() {
-    try {
-      // Mostrar indicador de carga
-      itemList.innerHTML = `
-        <div class="col-12 text-center my-3">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Cargando...</span>
-          </div>
-          <p class="mt-2">Cargando productos...</p>
-        </div>
-      `;
-      
-      const response = await fetch(API_URL);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
-      }
-      
-      const items = await response.json();
-      
-      // Verificar si hay productos
-      if (!items || items.length === 0) {
-        itemList.innerHTML = `
-          <div class="col-12 text-center my-4">
-            <div class="alert alert-info">
-              <i class="fa-solid fa-info-circle me-2"></i>
-              No hay productos disponibles en este momento.
-            </div>
-            <p>Agrega un nuevo producto utilizando el formulario.</p>
-          </div>
-        `;
-        return;
-      }
-
-      // Renderizar productos
-      itemList.innerHTML = "";
-      items.forEach((item) => {
-        const imageSrc = item.url && item.url.trim() !== "" ? item.url : "../img/placeholder.jpg";
-        console.log(`Cargando imagen para ${item.nombre}: ${imageSrc}`);
-
-        const card = document.createElement("div");
-        card.classList.add("col-md-4", "mb-3");
-        card.innerHTML = `
-          <div class="card h-100 shadow-sm">
-            <img src="${imageSrc}" class="card-img-top" alt="${item.nombre}" 
-                 style="height: 200px; object-fit: cover;"
-                 onerror="this.src='../img/placeholder.jpg'">
-            <div class="card-body">
-              <h5 class="card-title">${item.nombre}</h5>
-              <p class="card-text">$ ${item.precio.toFixed(2)} por 100 grs</p>
-              <p class="card-text">Existencias: ${item.existencia}</p>
-              <p class="card-text">Categoría: ${item.categoria?.id || 'N/A'}</p>
-              <div class="d-flex justify-content-center gap-2">
-                <button class="btn btn-success agregar-carrito" data-id="${item.idproducto}">
-                  <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
-                </button>
-                <button class="btn btn-danger" data-id="${item.idproducto}">
-                  <i class="fa-solid fa-trash"></i> Eliminar
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-        itemList.appendChild(card);
-      });
+  // RENDERIZAR PRODUCTOS
+  function renderItems(items) {
+    itemList.innerHTML = "";
+    items.forEach((item) => {
+      const card = document.createElement("div");
+      card.classList.add("col-md-4", "mb-3");
+      card.innerHTML = `
+                <div class="card">
+                    <img src="${item.imageUrl}" class="card-img-top" alt="${
+        item.nombre
+      }">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.nombre}</h5>
+                        <p class="card-text">$ ${item.precio.toFixed(
+                          2
+                        )} por 100 grs</p>
+                        <p class="card-text">Existencias: ${item.existencia}</p>
+                        <p class="card-text">Categoría: ${
+                          item.categoria ? item.categoria.nombre : "N/A"
+                        }</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-success agregar-carrito" data-id="${
+                              item.idproducto
+                            }">
+                                <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+                            </button>
+                            <button class="btn btn-danger" data-id="${
+                              item.idproducto
+                            }">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+      itemList.appendChild(card);
+    });
 
       // Asignar evento a todos los botones de eliminar
       document.querySelectorAll(".btn-danger").forEach((btn) => {
@@ -186,7 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
     carrito = carrito ? JSON.parse(carrito) : [];
 
     // Verificar si el item ya está en el carrito
-    const itemExistente = carrito.find((item) => item.idproducto === Number(itemId));
+    const itemExistente = carrito.find(
+      (item) => item.idproducto === parseInt(itemId)
+    );
 
     if (itemExistente) {
       // Si ya existe, incrementamos la cantidad
@@ -205,6 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then((item) => {
+        console.log("Item recibido del backend:", item);
         carrito.push({ ...item, cantidad: 1 }); // Añadir el item con cantidad 1
         localStorage.setItem("carrito", JSON.stringify(carrito));
         showAlert(`"${item.nombre}" se ha añadido al carrito!`, "success");
@@ -235,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const existencia = parseInt(
       document.getElementById("nuevoItemExistenciaInput").value.trim()
     );
-    const categoriaValue = document
+    const categoriaId = document
       .getElementById("nuevoItemCategoriaInput")
       .value.trim();
     const imageUrl = document
@@ -257,8 +229,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (!validateInput(categoriaValue)) {
-      showAlert("Categoria fuera de límite.");
+    // No validamos 'categoriaId' aquí, asumimos la validación HTML es suficiente
+    const parsedCategoriaId = parseInt(categoriaId);
+    if (
+      isNaN(parsedCategoriaId) ||
+      parsedCategoriaId < 10 ||
+      parsedCategoriaId > 30
+    ) {
+      showAlert("La categoría debe ser un número entre 10 y 30.");
       return;
     }
 
@@ -268,20 +246,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // Ajustamos el objeto para que coincida con el modelo del backend
       const nuevoItem = {
-        nombre: nombre,
-        precio: precio,
-        existencia: existencia,
-        url: imageUrl, // Incluimos el campo url que existe en el modelo Producto
+        nombre,
+        precio,
+        existencia,
         categoria: {
-          id: parseInt(categoriaValue) // Enviamos un objeto con el ID de la categoría
-        }
+          categoria_id: parsedCategoriaId, // Enviamos la categoría como objeto con el ID
+        },
+        imageUrl,
       };
 
-      console.log("Datos enviados al backend:", nuevoItem); // Depuración
-
-      const response = await fetch(API_URL, {
+      await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
