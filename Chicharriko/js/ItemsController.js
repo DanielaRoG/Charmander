@@ -1,7 +1,8 @@
+// ItemsController.js
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("nuevoItemFormulario");
   const itemList = document.getElementById("list-items");
-  const API_URL = "http://localhost:3000/items";
+  const API_URL = "http://localhost:8080/api/Chicharrikos/productos";
 
   // VALIDACIÓN PERSONALIZADA PARA MENSAJES HTML5
   function setCustomValidationMessages() {
@@ -52,63 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // LLAMAR LA FUNCIÓN DE VALIDACIÓN PERSONALIZADA
-  setCustomValidationMessages();
-
-  // Llamamos la función para configurar los mensajes personalizados
-  setCustomValidationMessages();
-
-  // VALIDACIÓN PERSONALIZADA PARA MENSAJES HTML5
-  function setCustomValidationMessages() {
-    const nombreInput = document.getElementById("nuevoItemNombreInput");
-    const precioInput = document.getElementById("nuevoItemPrecioInput");
-    const existenciaInput = document.getElementById("nuevoItemExistenciaInput");
-    const categoriaInput = document.getElementById("nuevoItemCategoriaInput");
-    const imagenInput = document.getElementById("nuevoItemImagenInput");
-
-    nombreInput.addEventListener("invalid", function () {
-      this.setCustomValidity(
-        "Por favor, ingresa un nombre válido (sin caracteres especiales)."
-      );
-    });
-    nombreInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-
-    precioInput.addEventListener("invalid", function () {
-      this.setCustomValidity("El precio debe estar entre $1.00 y $1000.00.");
-    });
-    precioInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-
-    existenciaInput.addEventListener("invalid", function () {
-      this.setCustomValidity("La existencia debe ser 0 o mayor.");
-    });
-    existenciaInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-
-    categoriaInput.addEventListener("invalid", function () {
-      this.setCustomValidity("La categoría debe ser un número entre 10 y 30.");
-    });
-    categoriaInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-
-    imagenInput.addEventListener("invalid", function () {
-      this.setCustomValidity(
-        "Por favor, proporciona una URL válida de imagen."
-      );
-    });
-    imagenInput.addEventListener("input", function () {
-      this.setCustomValidity("");
-    });
-  }
-
-  // LLAMAR LA FUNCIÓN DE VALIDACIÓN PERSONALIZADA
-  setCustomValidationMessages();
-
-  // Llamamos la función para configurar los mensajes personalizados
   setCustomValidationMessages();
 
   // VALIDAR INPUT
@@ -135,11 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     alertContainer.innerHTML = `
-      <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    `;
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
   }
 
   // RENDERIZAR PRODUCTOS
@@ -149,26 +93,32 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = document.createElement("div");
       card.classList.add("col-md-4", "mb-3");
       card.innerHTML = `
-        <div class="card">
-          <img src="${item.imageUrl}" class="card-img-top" alt="${item.nombre}">
-          <div class="card-body">
-            <h5 class="card-title">${item.nombre}</h5>
-            <p class="card-text">$ ${item.precio.toFixed(2)} por 100 grs</p>
-             <p class="card-text">Existencias: ${item.existencia}</p>
-              <p class="card-text">Categoría: ${item.categoria}</p>
-            <div class="d-flex justify-content-center gap-2">
-               <button class="btn btn-success agregar-carrito" data-id="${
-                 item.id
-               }">
-          <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
-        </button>
-            <button class="btn btn-danger" data-id="${
-              item.id
-            }">Eliminar</button>
-            </div>
-          </div>
-        </div>
-      `;
+                <div class="card">
+                    <img src="${item.imageUrl}" class="card-img-top" alt="${
+        item.nombre
+      }">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.nombre}</h5>
+                        <p class="card-text">$ ${item.precio.toFixed(
+                          2
+                        )} por 100 grs</p>
+                        <p class="card-text">Existencias: ${item.existencia}</p>
+                        <p class="card-text">Categoría: ${
+                          item.categoria ? item.categoria.nombre : "N/A"
+                        }</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <button class="btn btn-success agregar-carrito" data-id="${
+                              item.idproducto
+                            }">
+                                <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+                            </button>
+                            <button class="btn btn-danger" data-id="${
+                              item.idproducto
+                            }">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
       itemList.appendChild(card);
     });
 
@@ -187,7 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
     carrito = carrito ? JSON.parse(carrito) : [];
 
     // Verificar si el item ya está en el carrito
-    const itemExistente = carrito.find((item) => item.id === itemId);
+    const itemExistente = carrito.find(
+      (item) => item.idproducto === parseInt(itemId)
+    );
 
     if (itemExistente) {
       // Si ya existe, puedes incrementar la cantidad o mostrar un mensaje
@@ -200,6 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`${API_URL}/${itemId}`)
       .then((response) => response.json())
       .then((item) => {
+        console.log("Item recibido del backend:", item);
         carrito.push({ ...item, cantidad: 1 }); // Añadir el item con cantidad 1
         localStorage.setItem("carrito", JSON.stringify(carrito));
         showAlert(`"${item.nombre}" se ha añadido al carrito!`, "success");
@@ -242,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const existencia = parseInt(
       document.getElementById("nuevoItemExistenciaInput").value.trim()
     );
-    const categoria = document
+    const categoriaId = document
       .getElementById("nuevoItemCategoriaInput")
       .value.trim();
     const imageUrl = document
@@ -264,8 +217,14 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (!validateInput(categoria)) {
-      showAlert("Categoria fuera de límite.");
+    // No validamos 'categoriaId' aquí, asumimos la validación HTML es suficiente
+    const parsedCategoriaId = parseInt(categoriaId);
+    if (
+      isNaN(parsedCategoriaId) ||
+      parsedCategoriaId < 10 ||
+      parsedCategoriaId > 30
+    ) {
+      showAlert("La categoría debe ser un número entre 10 y 30.");
       return;
     }
 
@@ -275,22 +234,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // Obtener los productos actuales
-      const response = await fetch(API_URL);
-      const items = await response.json();
-
-      // Obtener el siguiente ID (empezando desde 0 si no hay productos)
-      const nextId =
-        items.length > 0
-          ? String(Math.max(...items.map((item) => Number(item.id))) + 1)
-          : "1"; // Si no hay productos, empieza desde "1"
-
       const nuevoItem = {
-        id: nextId,
         nombre,
         precio,
         existencia,
-        categoria,
+        categoria: {
+          categoria_id: parsedCategoriaId, // Enviamos la categoría como objeto con el ID
+        },
         imageUrl,
       };
 

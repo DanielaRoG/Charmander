@@ -6,9 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const direccionInput = document.getElementById("direccionUsuario");
   const emailInput = document.getElementById("emailUsuario");
   const passwordInput = document.getElementById("passwordUsuario");
-  const passwordValidarInput = document.getElementById("passwordUsuarioValidar");
+  const passwordValidarInput = document.getElementById(
+    "passwordUsuarioValidar"
+  );
   const togglePasswordBtn = document.getElementById("togglePassword");
-  const togglePasswordValidarBtn = document.getElementById("togglePasswordValidar");
+  const togglePasswordValidarBtn = document.getElementById(
+    "togglePasswordValidar"
+  );
 
   // Función para alternar la visibilidad de la contraseña
   function togglePasswordVisibility(input, button) {
@@ -68,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     let valid = true;
 
-    // Validaciones campo por campo
+    // Validaciones campo por campo (se mantienen)
     if (nombreInput.value.trim() === "") {
       alert("Por favor ingresa tu nombre completo.");
       valid = false;
@@ -104,11 +108,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       // Verificar si el email ya existe (usa "correo" para coincidir con backend)
-      const responseUsers = await fetch("http://localhost:8080/api/Chicharrikos/cliente");
+      const responseUsers = await fetch(
+        "http://localhost:8080/api/Chicharrikos/cliente"
+      );
       if (!responseUsers.ok) throw new Error("Error al obtener usuarios");
       const users = await responseUsers.json();
 
-      const emailExiste = users.some(user => user.correo === emailInput.value.trim());
+      const emailExiste = users.some(
+        (user) => user.correo === emailInput.value.trim()
+      );
       if (emailExiste) {
         alert("El correo ya está registrado. Intenta con otro.");
         return;
@@ -120,29 +128,59 @@ document.addEventListener("DOMContentLoaded", function () {
         telefono: telefonoInput.value.trim(),
         direccion: direccionInput.value.trim(),
         correo: emailInput.value.trim(),
-        contraseña: passwordInput.value.trim()
+        contraseña: passwordInput.value.trim(),
       };
 
-      const responseCreate = await fetch("http://localhost:8080/api/Chicharrikos/cliente", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(nuevoUsuario)
-      });
+      const responseCreate = await fetch(
+        "http://localhost:8080/api/Chicharrikos/auth/registro",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(nuevoUsuario),
+        }
+      );
 
       if (!responseCreate.ok) {
         const errorText = await responseCreate.text();
-        throw new Error(`Error al registrar usuario: ${errorText}`);
+        showAlert(`Error al registrar usuario: ${errorText}`, "danger");
+        return;
       }
 
       const data = await responseCreate.json();
-      alert("Usuario agregado exitosamente!");
-      form.reset();
-
+      showAlert(
+        "Usuario registrado exitosamente. Redirigiendo al login...",
+        "success"
+      );
+      setTimeout(function () {
+        window.location.href = "./login.html"; // Redirige a la página de login
+      }, 3000); // Redirige después de 3 segundos
+      form.reset(); // Limpia el formulario después de mostrar el mensaje (opcional)
     } catch (error) {
       console.error("Error al registrar usuario:", error);
-      alert("Hubo un error al registrar el usuario. Inténtalo de nuevo.");
+      showAlert(
+        "Hubo un error al registrar el usuario. Inténtalo de nuevo.",
+        "danger"
+      );
     }
   });
+
+  // Función para mostrar alertas de Bootstrap
+  function showAlert(message, type) {
+    const alertDiv = document.createElement("div");
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.setAttribute("role", "alert");
+    alertDiv.textContent = message;
+
+    const closeButton = document.createElement("button");
+    closeButton.setAttribute("type", "button");
+    closeButton.className = "btn-close";
+    closeButton.setAttribute("data-bs-dismiss", "alert");
+    closeButton.setAttribute("aria-label", "Close");
+    alertDiv.appendChild(closeButton);
+
+    alertContainer.innerHTML = ""; // Limpia cualquier alerta anterior
+    alertContainer.appendChild(alertDiv);
+  }
 });
