@@ -103,9 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
                           2
                         )} por 100 grs</p>
                         <p class="card-text">Existencias: ${item.existencia}</p>
-                        <p class="card-text">Categoría: ${
-                          item.categoria ? item.categoria.nombre : "N/A"
-                        }</p>
+                       
                         <div class="d-flex justify-content-center gap-2">
                             <button class="btn btn-success agregar-carrito" data-id="${
                               item.idproducto
