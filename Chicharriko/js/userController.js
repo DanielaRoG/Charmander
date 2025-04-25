@@ -6,9 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const direccionInput = document.getElementById("direccionUsuario");
   const emailInput = document.getElementById("emailUsuario");
   const passwordInput = document.getElementById("passwordUsuario");
-  const passwordValidarInput = document.getElementById("passwordUsuarioValidar");
+  const passwordValidarInput = document.getElementById(
+    "passwordUsuarioValidar"
+  );
   const togglePasswordBtn = document.getElementById("togglePassword");
-  const togglePasswordValidarBtn = document.getElementById("togglePasswordValidar");
+  const togglePasswordValidarBtn = document.getElementById(
+    "togglePasswordValidar"
+  );
 
   // Función para alternar la visibilidad de la contraseña
   function togglePasswordVisibility(input, button) {
@@ -64,11 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  form.addEventListener("submit", function (event) {
+  form.addEventListener("submit", async function (event) {
     event.preventDefault();
     let valid = true;
 
-    // Validaciones campo por campo
+    // Validaciones campo por campo (se mantienen)
     if (nombreInput.value.trim() === "") {
       alert("Por favor ingresa tu nombre completo.");
       valid = false;
@@ -102,56 +106,81 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!valid) return;
 
-    // Validación de email duplicado y registro
-    fetch("http://localhost:3002/users")
-      .then(response => response.json())
-      .then(users => {
-        const emailExiste = users.some(user => user.email === emailInput.value.trim());
+    try {
+      // Verificar si el email ya existe (usa "correo" para coincidir con backend)
+      const responseUsers = await fetch(
+        "http://localhost:8080/api/Chicharrikos/cliente"
+      );
+      if (!responseUsers.ok) throw new Error("Error al obtener usuarios");
+      const users = await responseUsers.json();
 
-        if (emailExiste) {
-          alert("El correo ya está registrado. Intenta con otro.");
-          return;
-        }
+      const emailExiste = users.some(
+        (user) => user.correo === emailInput.value.trim()
+      );
+      if (emailExiste) {
+        alert("El correo ya está registrado. Intenta con otro.");
+        return;
+      }
 
-        let newId = 1;
-        if (users.length > 0) {
-          const lastUserId = Math.max(...users.map(user => parseInt(user.id, 10)));
-          newId = lastUserId + 1;
-        }
+      // Crear nuevo usuario (sin id, lo genera el backend)
+      const nuevoUsuario = {
+        nombre: nombreInput.value.trim(),
+        telefono: telefonoInput.value.trim(),
+        direccion: direccionInput.value.trim(),
+        correo: emailInput.value.trim(),
+        contraseña: passwordInput.value.trim(),
+      };
 
-        const nuevoUsuario = {
-          id: newId.toString(),
-          nombre: nombreInput.value.trim(),
-          telefono: telefonoInput.value.trim(),
-          direccion: direccionInput.value.trim(),
-          email: emailInput.value.trim(),
-          password: passwordInput.value.trim()
-        };
-
-        return fetch("http://localhost:3002/users", {
+      const responseCreate = await fetch(
+        "http://localhost:8080/api/Chicharrikos/auth/registro",
+        {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(nuevoUsuario)
-        });
-      })
-      .then(response => {
-        if (response && response.ok) {
-          return response.json();
-        } else if (response) {
-          throw new Error("Error al registrar usuario");
+          body: JSON.stringify(nuevoUsuario),
         }
-      })
-      .then(data => {
-        if (data) {
-          alert("Usuario agregado exitosamente!");
-          form.reset();
-        }
-      })
-      .catch(error => {
-        console.error("Error al registrar usuario:", error);
-        alert("Hubo un error al registrar el usuario. Inténtalo de nuevo.");
-      });
+      );
+
+      if (!responseCreate.ok) {
+        const errorText = await responseCreate.text();
+        showAlert(`Error al registrar usuario: ${errorText}`, "danger");
+        return;
+      }
+
+      const data = await responseCreate.json();
+      showAlert(
+        "Usuario registrado exitosamente. Redirigiendo al login...",
+        "success"
+      );
+      setTimeout(function () {
+        window.location.href = "./login.html"; // Redirige a la página de login
+      }, 3000); // Redirige después de 3 segundos
+      form.reset(); // Limpia el formulario después de mostrar el mensaje (opcional)
+    } catch (error) {
+      console.error("Error al registrar usuario:", error);
+      showAlert(
+        "Hubo un error al registrar el usuario. Inténtalo de nuevo.",
+        "danger"
+      );
+    }
   });
+
+  // Función para mostrar alertas de Bootstrap
+  function showAlert(message, type) {
+    const alertDiv = document.createElement("div");
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.setAttribute("role", "alert");
+    alertDiv.textContent = message;
+
+    const closeButton = document.createElement("button");
+    closeButton.setAttribute("type", "button");
+    closeButton.className = "btn-close";
+    closeButton.setAttribute("data-bs-dismiss", "alert");
+    closeButton.setAttribute("aria-label", "Close");
+    alertDiv.appendChild(closeButton);
+
+    alertContainer.innerHTML = ""; // Limpia cualquier alerta anterior
+    alertContainer.appendChild(alertDiv);
+  }
 });

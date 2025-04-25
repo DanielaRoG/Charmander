@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("loginForm");
   const emailInput = document.getElementById("email_login");
   const passwordInput = document.getElementById("password_login");
@@ -6,11 +6,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function showMessage(message, type) {
     messageContainer.innerHTML = `
-      <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    `;
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
   }
 
   function validateFields() {
@@ -40,71 +40,74 @@ document.addEventListener("DOMContentLoaded", function() {
 
   async function authenticateUser(email, password) {
     try {
-      const response = await fetch("http://localhost:3002/users");
-      if (!response.ok) throw new Error("Error al conectar con el servidor");
-      const users = await response.json();
+      const response = await fetch(
+        "http://localhost:8080/api/Chicharrikos/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ correo: email, contraseña: password }),
+        }
+      );
 
-      const foundUser = users.find(user => user.email === email && user.password === password);
+      if (!response.ok) {
+        try {
+          const errorBody = await response.json();
+          showMessage(
+            `Error al iniciar sesión: ${
+              errorBody.mensaje || "Credenciales inválidas"
+            }`,
+            "danger"
+          );
+        } catch (e) {
+          showMessage(
+            `Error al iniciar sesión: Credenciales inválidas`,
+            "danger"
+          );
+          console.error("Error al parsear error JSON:", e);
+        }
+        return false;
+      }
 
-      if (foundUser) {
-        sessionStorage.setItem("currentUser", JSON.stringify({
-          id: foundUser.id,
-          nombre: foundUser.nombre,
-          email: foundUser.email
-        }));
-        showMessage("¡Inicio de sesión exitoso! Redirigiendo...", "success");
+      try {
+        const data = await response.json();
+        showMessage(data.mensaje || "Inicio de sesión exitoso", "success"); // Asume que la respuesta JSON tiene un campo "mensaje"
         setTimeout(() => {
-          window.location.href = "../html/index.html";
-        }, 3000);
+          window.location.href = "../html/index.html"; // Redirige a la página principal
+        }, 2000);
         return true;
-      } else {
-        showMessage("Email o contraseña incorrectos", "danger");
+      } catch (e) {
+        showMessage("Error al procesar la respuesta del servidor", "danger");
+        console.error("Error al parsear JSON de éxito:", e);
         return false;
       }
     } catch (error) {
       console.error("Error de autenticación:", error);
-      showMessage(`Error: ${error.message}. Usando autenticación local.`, "warning");
-
-      const usersLocal = [
-        { id: "1", nombre: "Denisse Hernández", email: "denissehernandez2002@gmail.com", password: "1234567" },
-        { id: "2", nombre: "Aylen Vázquez", email: "denissehernandez2002@gmail.com", password: "lkmmlmlkmlkml" },
-        { id: "3", nombre: "Aylen Vázquez", email: "denissehernandez2002@gmail.com", password: "sjnsdkjsdshkhsjkd" },
-        { id: "4", nombre: "daniela", email: "dany.rodgarcia@gmail.com", password: "999999" }
-      ];
-
-      const localUser = usersLocal.find(user => user.email === email && user.password === password);
-
-      if (localUser) {
-        sessionStorage.setItem("currentUser", JSON.stringify({
-          id: localUser.id,
-          nombre: localUser.nombre,
-          email: localUser.email
-        }));
-        showMessage("¡Inicio de sesión exitoso con autenticación local! Redirigiendo...", "success");
-        setTimeout(() => {
-          window.location.href = "../html/index.html";
-        }, 3000);
-        return true;
-      } else {
-        showMessage("Email o contraseña incorrectos", "danger");
-        return false;
-      }
+      showMessage(`Error al conectar con el servidor: ${error}`, "danger");
+      return false;
     }
   }
 
   emailInput.addEventListener("input", () => {
-    if (emailInput.classList.contains("is-invalid") && emailInput.value.trim()) {
+    if (
+      emailInput.classList.contains("is-invalid") &&
+      emailInput.value.trim()
+    ) {
       emailInput.classList.remove("is-invalid");
     }
   });
 
   passwordInput.addEventListener("input", () => {
-    if (passwordInput.classList.contains("is-invalid") && passwordInput.value.trim()) {
+    if (
+      passwordInput.classList.contains("is-invalid") &&
+      passwordInput.value.trim()
+    ) {
       passwordInput.classList.remove("is-invalid");
     }
   });
 
-  form.addEventListener("submit", async function(e) {
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
     if (validateFields()) {
       const email = emailInput.value.trim();
@@ -113,15 +116,15 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // Opcional: verificar si ya hay usuario logueado
+  // Opcional: verificar si ya hay usuario logueado (tendrás que adaptar esto si implementas sesiones en el backend)
   function checkLoggedInStatus() {
     const currentUser = sessionStorage.getItem("currentUser");
     if (currentUser) {
       const user = JSON.parse(currentUser);
       showMessage(`Ya has iniciado sesión como ${user.nombre}.`, "info");
-      /*setTimeout(() => {
-        window.location.href = "../html/index.html";
-      }, 3000);*/
+      // setTimeout(() => {
+      //     window.location.href = "../html/index.html";
+      // }, 3000);
     }
   }
 

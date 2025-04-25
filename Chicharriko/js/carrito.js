@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const finalizarCompraBtn = document.getElementById("finalizar-compra-btn");
 
   const CODIGO_DESCUENTO = "CHICHARRIKOS2025";
-  const PORCENTAJE_DESCUENTO = 0.1; // 10% de descuento
+  const PORCENTAJE_DESCUENTO = 0.1; // 10%
   const PRECIO_ENVIO = 100.0;
 
   let descuentoAplicado = false;
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const carrito = localStorage.getItem("carrito");
     const itemsEnCarrito = carrito ? JSON.parse(carrito) : [];
 
-    carritoItemsTable.innerHTML = ""; // Limpiar la tabla
+    carritoItemsTable.innerHTML = ""; // Limpiar tabla
 
     if (itemsEnCarrito.length === 0) {
       carritoVacioMensaje.style.display = "table-row";
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
       carritoVacioMensaje.style.display = "none";
     }
 
-    itemsEnCarrito.forEach((item, index) => {
+    itemsEnCarrito.forEach((item) => {
       const row = carritoItemsTable.insertRow();
 
       // Celda de Producto
@@ -41,11 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
           <img src="${item.imageUrl}" alt="${
         item.nombre
       }" width="80" class="me-2" style="border-radius: 5px;">
-          <div class="ms-2"> <span><strong>${
-            item.nombre
-          }</strong></span><br> <span>$ ${item.precio.toFixed(
-        2
-      )} por 100 grs</span>
+          <div class="ms-2">
+            <strong>${item.nombre}</strong><br>
+            <span>$${
+              item.precio ? item.precio.toFixed(2) : "N/A"
+            } por 100 grs</span>
           </div>
         </div>
       `;
@@ -54,9 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const cantidadCell = row.insertCell();
       cantidadCell.innerHTML = `
         <div class="d-flex align-items-center">
-          <button class="btn btn-sm btn-outline-secondary cambiar-cantidad" data-id="${item.id}" data-accion="restar">-</button>
+          <button class="btn btn-sm btn-outline-secondary cambiar-cantidad" data-id="${item.idproducto}" data-accion="restar">-</button>
           <span class="mx-2">${item.cantidad}</span>
-          <button class="btn btn-sm btn-outline-secondary cambiar-cantidad" data-id="${item.id}" data-accion="sumar">+</button>
+          <button class="btn btn-sm btn-outline-secondary cambiar-cantidad" data-id="${item.idproducto}" data-accion="sumar">+</button>
         </div>
       `;
 
@@ -66,9 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
         2
       )}`;
 
-      // Celda de Acciones (Eliminar)
+      // Celda de Acciones
       const accionesCell = row.insertCell();
-      accionesCell.innerHTML = `<button class="btn btn-sm btn-danger eliminar-item-carrito" data-id="${item.id}">Eliminar</button>`;
+      accionesCell.innerHTML = `<button class="btn btn-sm btn-danger eliminar-item-carrito" data-id="${item.idproducto}">Eliminar</button>`;
     });
 
     actualizarResumen();
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let subtotal = 0;
     itemsEnCarrito.forEach((item) => {
-      subtotal += item.precio * item.cantidad;
+      subtotal += (item.precio || 0) * item.cantidad;
     });
 
     let descuento = 0;
@@ -103,7 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let carrito = localStorage.getItem("carrito");
     carrito = carrito ? JSON.parse(carrito) : [];
 
-    const itemIndex = carrito.findIndex((item) => item.id === itemId);
+    const itemIndex = carrito.findIndex(
+      (item) => item.idproducto === parseInt(itemId)
+    );
 
     if (itemIndex !== -1) {
       if (accion === "sumar") {
@@ -120,7 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function eliminarItemDelCarrito(itemId) {
     let carrito = localStorage.getItem("carrito");
     carrito = carrito ? JSON.parse(carrito) : [];
-    const nuevoCarrito = carrito.filter((item) => item.id !== itemId);
+    const nuevoCarrito = carrito.filter(
+      (item) => item.idproducto !== parseInt(itemId)
+    );
     localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
     mostrarCarrito();
   }
@@ -159,12 +163,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (itemsEnCarrito.length > 0) {
       alert("¡Gracias por tu compra!");
-      localStorage.removeItem("carrito"); // Limpiar el carrito después de la compra (simulada)
+      localStorage.removeItem("carrito");
       mostrarCarrito();
     } else {
       alert("Tu carrito está vacío. ¡Agrega algunos productos!");
     }
   });
 
-  mostrarCarrito(); // Cargar el carrito al cargar la página
+  mostrarCarrito();
 });
